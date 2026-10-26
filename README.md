@@ -177,5 +177,4 @@ docker compose --env-file infra/eval-v3/.env -f infra/eval-v3/compose.yaml -p ag
 
 ## 📝 说明
 
-- 本系统为个人学习与求职展示用途，**未接入真实支付网关**；`refunded` 只是原型数据库的状态。
-- 敏感配置（API key、密码、审批凭据）均在 `.env` 中，已通过 `.gitignore` 排除，不入库。
+- 本系统为个人学习展示用途，**未接入真实支付网关**；`refunded` 只是原型数据库的状态。
