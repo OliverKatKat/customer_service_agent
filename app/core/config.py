@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Config_Last_FirstAgent"
+    PROJECT_NAME: str = "售后客服 Agent"
 
     DATABASE_URL: str
     # Existing records belong to this merchant after the M0 migration.
