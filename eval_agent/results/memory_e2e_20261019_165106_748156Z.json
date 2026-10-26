@@ -1,0 +1,115 @@
+{
+  "evaluation_type": "customer_memory_e2e",
+  "run_at_utc": "2026-10-19T16:51:06.747223+00:00",
+  "tenant_id": "merchant_eval_agent",
+  "checks": {
+    "source_written_with_provenance": true,
+    "same_customer_tool_called": true,
+    "same_customer_tool_grounded": true,
+    "same_customer_direct_grounded": true,
+    "same_customer_reply_uses_preference": true,
+    "source_reply_does_not_deny_storage": true,
+    "same_customer_reply_no_contact_promise": true,
+    "other_customer_tool_called": true,
+    "other_customer_tool_no_match": true,
+    "other_customer_reply_no_false_registration_claim": true,
+    "other_customer_direct_no_match": true,
+    "cross_customer_scope_denied": true,
+    "cross_tenant_scope_denied": true
+  },
+  "passed": true,
+  "note": "Reply meaning and unsupported claims still require human review; token/LLM costs are not scored.",
+  "evidence": {
+    "source_ticket": {
+      "ticket_id": 930326,
+      "task_id": "7b6befd3-ff52-46a9-a9ee-1149f7d1f72f",
+      "request_id": "d122d0a2-eb01-485c-8b22-342fc1184f90",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "您好，关于耳机蓝牙连接不稳定的问题，我先说明一下排查思路，同时确认一下您的型号信息。\n\n**请先确认：您使用的是 EVAL-SOUND X1 吗？** 现有资料中的排查步骤仅适用于该型号；如果是其他型号，资料不足，需要人工核实。\n\n若为 EVAL-SOUND X1，可按以下步骤排查：\n\n1. **补充基本信息**：请告知您的手机型号、系统版本，以及断连发生的具体场景（例如通话中、走动时、多设备切换时）[K1]\n2. **确认电量**：确认耳机和充电盒都有电 [K1]\n3. **删除旧配对记录**：在手机蓝牙设置中删除 EVAL-SOUND X1 的配对记录 [K1]\n4. **重置并重新配对**：按住充电盒背面的圆形配对键 7 秒，直到白色指示灯连续闪烁，再重新配对 [K1]\n5. **固件更新**：如果官方应用显示有可用固件更新，可在官方应用中更新固件 [K2]\n6. **若仍断连**：请不要着急，这种情况需要人工客服核对购买记录和保修资格后再判断处理方式 [K1]\n\n另外提醒：我们不会向您索要密码、验证码或支付信息，请注意保护 [K2]。\n\n**关于邮件联系**：已收到您希望以后通过邮件联系的偏好，系统会尝试记录，后续可再核实。需要说明的是，本商户目前仅通过站内客服处理售后工单，我这边没有主动发送邮件或安排回访的能力；如果您需要邮件回复，建议联系人工客服安排。\n\n请先告诉我型号和上述基本信息，我可以帮您进一步缩小问题范围。",
+      "postflight_actions": []
+    },
+    "stored_preference": {
+      "text": "联系偏好：邮件联系",
+      "metadata": {
+        "tenant_id": "merchant_eval_agent",
+        "customer_id": "eval_memory_alice_2",
+        "source_ticket_id": "930326",
+        "type": "user_episodic_memory",
+        "category": "contact_preference",
+        "timestamp": "2026-10-19T16:50:52.659585+00:00",
+        "source": "local_explicit_preference_rule"
+      }
+    },
+    "same_customer_ticket": {
+      "ticket_id": 930327,
+      "task_id": "414fa9fb-2260-4d11-83a1-4b2a20356625",
+      "request_id": "c0a9c0d8-0dbc-491d-a67a-b8366eda7d5b",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "查到您之前登记的联系偏好是**邮件联系**。\n\n关于耳机蓝牙连接不稳定的问题，我需要先说明：目前我这边没有可用的设备日志或型号资料查询工具，无法直接定位具体原因。为了帮您排查，方便告诉我以下信息吗？\n\n1. 耳机的具体型号；\n2. 是连接手机还是电脑，系统版本大概是什么；\n3. 不稳定表现为断连、卡顿还是左右耳不同步，大概多久出现一次；\n4. 是否已经尝试过重新配对或恢复出厂设置。\n\n另外提醒一下：我这边没有主动发送邮件或安排回访的工具，无法承诺稍后通过邮件跟进。如果您希望以邮件方式获得正式回复，建议联系人工客服安排。",
+      "postflight_actions": []
+    },
+    "same_customer_checkpoint": {
+      "selected_skill": null,
+      "tool_call_sequence": [
+        "search_user_memory"
+      ],
+      "memory_tool_results": [
+        {
+          "status": "found",
+          "memories": [
+            {
+              "timestamp": "2026-10-19T16:50:52.659585+00:00",
+              "source_ticket_id": "930326",
+              "text": "联系偏好：邮件联系"
+            }
+          ]
+        }
+      ]
+    },
+    "same_customer_direct_read": {
+      "status": "found",
+      "memories": [
+        {
+          "timestamp": "2026-10-19T16:50:52.659585+00:00",
+          "source_ticket_id": "930326",
+          "text": "联系偏好：邮件联系"
+        }
+      ]
+    },
+    "other_customer_ticket": {
+      "ticket_id": 930328,
+      "task_id": "94defcef-b8c0-4544-a472-cdb31fb5023a",
+      "request_id": "93b4753a-cbf2-4aac-9f0a-20e6d3a5a94a",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "我这边没有检索到您之前登记过的联系偏好记录，所以暂时无法确认您希望用哪种方式联系。\n\n如果您愿意，可以现在告诉我您偏好的联系方式（比如邮件或电话），系统会尝试记录，后续可以再核实。\n\n另外关于耳机蓝牙连接不稳定的问题，为了帮您排查，方便提供以下信息吗：\n- 耳机的具体型号\n- 使用的手机/电脑型号与系统版本\n- 是单耳还是双耳都出现断连，大概多久断一次\n- 是否在特定场景下更明显（如人多的地方、隔墙、充电盒附近）\n\n有了这些信息，我可以对照产品资料给您更准确的排查步骤。",
+      "postflight_actions": []
+    },
+    "other_customer_checkpoint": {
+      "selected_skill": null,
+      "tool_call_sequence": [
+        "search_user_memory"
+      ],
+      "memory_tool_results": [
+        {
+          "status": "no_match",
+          "memories": []
+        }
+      ]
+    },
+    "other_customer_direct_read": {
+      "status": "no_match",
+      "memories": []
+    },
+    "cross_customer_direct_read": {
+      "status": "no_memory_scope",
+      "memories": []
+    },
+    "cross_tenant_direct_read": {
+      "status": "no_memory_scope",
+      "memories": []
+    }
+  }
+}

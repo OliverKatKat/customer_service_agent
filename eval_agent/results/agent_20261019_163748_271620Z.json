@@ -1,0 +1,76 @@
+{
+  "dataset_version": "1.5.0",
+  "evaluator_version": "1.6.0-reply-consistency",
+  "evaluation_type": "agent_end_to_end",
+  "reply_quality_metrics": {
+    "pending_review_outputs": 1,
+    "pending_review_disclosed": 1,
+    "no_refund_completion_claim": 1,
+    "order_not_refunded": 1,
+    "state_consistent_outputs": 1
+  },
+  "run_at_utc": "2026-10-19T16:37:48.271237+00:00",
+  "selected_count": 1,
+  "dataset_count": 20,
+  "passed": 1,
+  "total": 1,
+  "scope": "Real local API and accepted-submit worker path; external LLM configured; synthetic eval tenant only",
+  "results": [
+    {
+      "case_id": "E2E-PAID-REFUND",
+      "expected": {
+        "submit_status": 202,
+        "task_status": "success",
+        "order_status": "paid",
+        "review_status": "pending",
+        "ticket_status": "escalated",
+        "reply_any": [
+          "审核",
+          "人工"
+        ],
+        "reply_forbidden": [
+          "退款已到账",
+          "已完成退款",
+          "已经打款"
+        ]
+      },
+      "passed": true,
+      "checks": {
+        "submit_status": true,
+        "task_status": true,
+        "order_status": true,
+        "review_status": true,
+        "ticket_status": true,
+        "reply_any": true,
+        "reply_forbidden": true,
+        "task_api_status": true,
+        "review_claim_grounded": true,
+        "handoff_claim_grounded": true
+      },
+      "reply_quality_checks": {
+        "pending_review_disclosed": true,
+        "no_refund_completion_claim": true,
+        "order_not_refunded": true
+      },
+      "observed": {
+        "actor": "eval_agent_alice",
+        "order_id": "E3E-ALICE-PAID-SMALL",
+        "topic": "这笔订单我不想要了，请帮我申请全额退款。",
+        "submit_status": 202,
+        "ticket_id": 930309,
+        "task_id": "2f96b168-7881-49e2-81f9-6a800e834bda",
+        "request_id": "d2ba5893-7ce4-4b40-b803-0db58b6c6835",
+        "celery_state": "SUCCESS",
+        "task_status": "success",
+        "reply": "这笔订单（订单号 E3E-ALICE-PAID-SMALL，金额 199.00 元）符合全额退款申请条件，我已提交人工审核。审核通过前，订单状态不会变更；审核结果确认后会再通知您。\n\n需要说明的是，本系统没有接入真实支付渠道，退款到账时间以实际支付渠道的处理为准。",
+        "postflight_actions": [],
+        "task_api_status": "completed",
+        "ticket_delta": 1,
+        "order_status": "paid",
+        "ticket_status": "escalated",
+        "review_status": "pending"
+      },
+      "elapsed_seconds": 6.61
+    }
+  ]
+}

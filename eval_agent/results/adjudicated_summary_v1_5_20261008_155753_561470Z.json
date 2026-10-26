@@ -1,0 +1,19 @@
+{
+  "dataset_version": "1.5.0",
+  "generated_at_utc": "2026-10-08T15:57:53.561459+00:00",
+  "machine_summary_report": "agent_summary_v1_5_20261008_155531_185195Z.json",
+  "machine_passed": 59,
+  "total_attempts": 60,
+  "adjudicated_false_positives": 1,
+  "adjusted_passed": 60,
+  "scope": "One targeted human semantic review; other machine passes were not manually certified",
+  "adjudications": [
+    {
+      "report": "agent_20261008_154510_936201Z.json",
+      "case_id": "E2E-ALREADY-REFUNDED",
+      "ticket_id": 930458,
+      "decision": "evaluator_false_positive",
+      "reason": "回复中的‘该订单已经完成退款’描述原有 refunded 状态，随后明确拒绝重复申请，并未声称本次再次退款成功。"
+    }
+  ]
+}

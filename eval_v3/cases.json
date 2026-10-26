@@ -1,0 +1,533 @@
+{
+  "dataset_version": "3.2.0",
+  "fixture_file": "fixtures.json",
+  "policy": "M0 writes roll back; M1 read cases share deterministic isolated fixture points and runner-created points are cleaned after each run; never compare scores against v1/v2 datasets.",
+  "cases": [
+    {
+      "case_id": "M0-API-OWN-ORDER",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_alpha_alice",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/submit",
+        "json": {
+          "topic": "请核对我的退款申请。",
+          "order_id": "E3A-ALICE-PAID-SMALL"
+        }
+      },
+      "expect": {
+        "http_status": 202,
+        "new_ticket": {
+          "tenant_id": "merchant_eval_alpha",
+          "customer_id": "eval_alpha_alice",
+          "order_id": "E3A-ALICE-PAID-SMALL"
+        },
+        "order_status_before_approval": "paid"
+      }
+    },
+    {
+      "case_id": "M0-API-OTHER-CUSTOMER",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_alpha_alice",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/submit",
+        "json": {
+          "topic": "查询这个订单。",
+          "order_id": "E3A-BOB-PAID"
+        }
+      },
+      "expect": {
+        "http_status": 404,
+        "ticket_delta": 0,
+        "order_status": "paid"
+      }
+    },
+    {
+      "case_id": "M0-API-OTHER-TENANT",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_alpha_alice",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/submit",
+        "json": {
+          "topic": "查询这个订单。",
+          "order_id": "E3B-ALICE-PAID"
+        }
+      },
+      "expect": {
+        "http_status": 404,
+        "ticket_delta": 0,
+        "order_status": "paid"
+      }
+    },
+    {
+      "case_id": "M0-API-OTHER-TENANT-REVERSE",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_beta_alice",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/submit",
+        "json": {
+          "topic": "查询这个订单。",
+          "order_id": "E3A-ALICE-PAID-SMALL"
+        }
+      },
+      "expect": {
+        "http_status": 404,
+        "ticket_delta": 0,
+        "order_status": "paid"
+      }
+    },
+    {
+      "case_id": "M0-API-FORGED-CUSTOMER-FIELD",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_alpha_alice",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/submit",
+        "json": {
+          "topic": "我的退款申请。",
+          "order_id": "E3A-ALICE-PAID-SMALL",
+          "customer_id": "eval_alpha_bob",
+          "tenant_id": "merchant_eval_beta"
+        }
+      },
+      "expect": {
+        "http_status": 202,
+        "new_ticket": {
+          "tenant_id": "merchant_eval_alpha",
+          "customer_id": "eval_alpha_alice",
+          "order_id": "E3A-ALICE-PAID-SMALL"
+        }
+      }
+    },
+    {
+      "case_id": "M0-AUTH-INACTIVE",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_beta_disabled",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/auth/login",
+        "form_username": "eval_beta_disabled"
+      },
+      "expect": {
+        "http_status": 403,
+        "token_issued": false
+      }
+    },
+    {
+      "case_id": "M0-TASK-CROSS-TENANT",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_beta_alice",
+      "depends_on": "M0-API-OWN-ORDER",
+      "request": {
+        "method": "GET",
+        "path_template": "/api/v1/task/{task_id_from_dependency}"
+      },
+      "expect": {
+        "http_status": 404,
+        "no_result_leak": true,
+        "forbidden_values": [
+          "E3A-ALICE-PAID-SMALL",
+          "eval_alpha_alice",
+          "merchant_eval_alpha"
+        ]
+      }
+    },
+    {
+      "case_id": "M0-TASK-OTHER-CUSTOMER",
+      "milestone": "M0",
+      "surface": "http",
+      "actor": "eval_alpha_bob",
+      "depends_on": "M0-API-OWN-ORDER",
+      "request": {
+        "method": "GET",
+        "path_template": "/api/v1/task/{task_id_from_dependency}"
+      },
+      "expect": {
+        "http_status": 404,
+        "no_result_leak": true,
+        "forbidden_values": [
+          "E3A-ALICE-PAID-SMALL",
+          "eval_alpha_alice",
+          "merchant_eval_alpha"
+        ]
+      }
+    },
+    {
+      "case_id": "M0-TOOL-OWN-ORDER",
+      "milestone": "M0",
+      "surface": "tool",
+      "tool": "inspect_refund_request",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_alpha",
+        "customer_id": "eval_alpha_alice",
+        "ticket_id": "930301"
+      },
+      "args": {
+        "order_id": "E3A-ALICE-PAID-SMALL"
+      },
+      "expect": {
+        "status": "ok",
+        "order_id": "E3A-ALICE-PAID-SMALL",
+        "order_status": "paid",
+        "amount": 199
+      }
+    },
+    {
+      "case_id": "M0-TOOL-OTHER-CUSTOMER",
+      "milestone": "M0",
+      "surface": "tool",
+      "tool": "inspect_refund_request",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_alpha",
+        "customer_id": "eval_alpha_alice",
+        "ticket_id": "930301"
+      },
+      "args": {
+        "order_id": "E3A-BOB-PAID"
+      },
+      "expect": {
+        "status": "order_unavailable",
+        "forbidden_values": [
+          "E3A-BOB-PAID",
+          "349.0"
+        ]
+      }
+    },
+    {
+      "case_id": "M0-TOOL-OTHER-TENANT",
+      "milestone": "M0",
+      "surface": "tool",
+      "tool": "inspect_refund_request",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_alpha",
+        "customer_id": "eval_alpha_alice",
+        "ticket_id": "930301"
+      },
+      "args": {
+        "order_id": "E3B-ALICE-PAID"
+      },
+      "expect": {
+        "status": "order_unavailable",
+        "forbidden_values": [
+          "E3B-ALICE-PAID"
+        ]
+      }
+    },
+    {
+      "case_id": "M0-TOOL-MISSING-IDENTITY",
+      "milestone": "M0",
+      "surface": "tool",
+      "tool": "inspect_refund_request",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_alpha",
+        "ticket_id": "930301"
+      },
+      "args": {
+        "order_id": "E3A-ALICE-PAID-SMALL"
+      },
+      "expect": {
+        "status": "missing_context",
+        "forbidden_values": [
+          "199.0"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-MEMORY-SAME-CUSTOMER-CROSS-TICKET",
+      "milestone": "M1",
+      "surface": "memory",
+      "actor": "eval_alpha_alice",
+      "target_ticket_id": 930302,
+      "source_ticket_id": 930301,
+      "query": "我之前说过喜欢怎样联系？",
+      "expect": {
+        "contains_facts": [
+          "联系偏好：邮件联系"
+        ],
+        "excludes_facts": [
+          "联系偏好：站内信联系",
+          "联系偏好：电话联系"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-MEMORY-BOB-OWN-SCOPE",
+      "milestone": "M1",
+      "surface": "memory",
+      "actor": "eval_alpha_bob",
+      "target_ticket_id": 930303,
+      "query": "请找客户联系偏好。",
+      "expect": {
+        "contains_facts": [
+          "联系偏好：站内信联系"
+        ],
+        "excludes_facts": [
+          "联系偏好：邮件联系",
+          "联系偏好：电话联系"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-MEMORY-BETA-OWN-SCOPE",
+      "milestone": "M1",
+      "surface": "memory",
+      "actor": "eval_beta_alice",
+      "target_ticket_id": 930304,
+      "query": "请找客户联系偏好。",
+      "expect": {
+        "contains_facts": [
+          "联系偏好：电话联系"
+        ],
+        "excludes_facts": [
+          "联系偏好：邮件联系",
+          "联系偏好：站内信联系"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-MEMORY-MISSING-IDENTITY",
+      "milestone": "M1",
+      "surface": "memory",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_alpha",
+        "ticket_id": "930302"
+      },
+      "query": "请找客户联系偏好。",
+      "expect": {
+        "result_count": 0,
+        "excludes_facts": [
+          "联系偏好：邮件联系",
+          "联系偏好：站内信联系",
+          "联系偏好：电话联系"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-MEMORY-CUSTOMER-TICKET-MISMATCH",
+      "milestone": "M1",
+      "surface": "memory",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_alpha",
+        "customer_id": "eval_alpha_alice",
+        "ticket_id": "930303"
+      },
+      "query": "我之前说过喜欢怎样联系？",
+      "expect": {
+        "result_count": 0,
+        "excludes_facts": [
+          "联系偏好：邮件联系",
+          "联系偏好：站内信联系"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-MEMORY-TENANT-TICKET-MISMATCH",
+      "milestone": "M1",
+      "surface": "memory",
+      "trusted_context": {
+        "tenant_id": "merchant_eval_beta",
+        "customer_id": "eval_beta_alice",
+        "ticket_id": "930302"
+      },
+      "query": "请找客户联系偏好。",
+      "expect": {
+        "result_count": 0,
+        "excludes_facts": [
+          "联系偏好：电话联系",
+          "联系偏好：邮件联系"
+        ]
+      }
+    },
+    {
+      "case_id": "M1-LOCAL-EXTRACTION-AND-WRITE",
+      "milestone": "M1",
+      "surface": "memory_validation",
+      "action": "supplemental",
+      "description": "只从客户原话提取两条明确偏好，写入后只对本人可见。",
+      "expect": {
+        "extracted_facts": [
+          ["contact_preference", "联系偏好：邮件联系"],
+          ["communication_preference", "沟通偏好：简短回复"]
+        ],
+        "stored_count": 2,
+        "own_contains": "联系偏好：邮件联系",
+        "other_excludes": "联系偏好：邮件联系"
+      }
+    },
+    {
+      "case_id": "M1-LEGACY-UNSCOPED-QUARANTINE",
+      "milestone": "M1",
+      "surface": "memory_validation",
+      "action": "supplemental",
+      "description": "旧 session_id 文档不得进入租户客户作用域。",
+      "expect": {
+        "forbidden_value": "LEGACY-UNSCOPED-EVAL-V3"
+      }
+    },
+    {
+      "case_id": "M1-SOURCE-TICKET-OWNERSHIP",
+      "milestone": "M1",
+      "surface": "memory_validation",
+      "action": "supplemental",
+      "description": "伪造为本人但源工单归属他人的记忆不得返回。",
+      "expect": {
+        "forbidden_value": "WRONG-SOURCE-EVAL-V3"
+      }
+    },
+    {
+      "case_id": "M1-WRITE-WRONG-CUSTOMER",
+      "milestone": "M1",
+      "surface": "memory_validation",
+      "action": "supplemental",
+      "description": "客户和源工单归属不一致时拒绝写入。",
+      "expect": {
+        "error_type": "PermissionError"
+      }
+    },
+    {
+      "case_id": "M2-REVIEW-CROSS-TENANT",
+      "milestone": "M2",
+      "surface": "review",
+      "actor": "eval_beta_admin",
+      "setup": {
+        "review_for_ticket_id": 930305
+      },
+      "action": "approve",
+      "expect": {
+        "http_status": 404,
+        "review_state": "pending",
+        "order_status": "paid",
+        "dispatch_delta": 0
+      }
+    },
+    {
+      "case_id": "M2-REVIEW-DUPLICATE-APPROVAL",
+      "milestone": "M2",
+      "surface": "review",
+      "actor": "eval_alpha_admin",
+      "setup": {
+        "review_for_ticket_id": 930305
+      },
+      "action": "approve_twice",
+      "expect": {
+        "effective_decisions": 1,
+        "dispatch_count": 1,
+        "audit_has_actor": true
+      }
+    },
+    {
+      "case_id": "M2-REVIEW-REJECTION",
+      "milestone": "M2",
+      "surface": "review",
+      "actor": "eval_alpha_admin",
+      "setup": {
+        "review_for_ticket_id": 930305
+      },
+      "action": "reject",
+      "expect": {
+        "review_state": "rejected",
+        "order_status": "paid",
+        "dispatch_count": 1,
+        "approved_outbox_count": 0,
+        "audit_has_reason": true
+      }
+    },
+    {
+      "case_id": "M2-REVIEW-ROLE-VERSION-CODE",
+      "milestone": "M2",
+      "surface": "review_api",
+      "action": "supplemental",
+      "description": "客户不能列出审核；过期版本和错误审核码均被拒绝。",
+      "expect": {
+        "user_list_status": 403,
+        "stale_version_status": 409,
+        "wrong_code_status": 403,
+        "review_state": "pending"
+      }
+    },
+    {
+      "case_id": "M3-REVIEW-PAGE-AND-CUSTOMER-STATUS",
+      "milestone": "M3",
+      "surface": "review_ui",
+      "action": "supplemental",
+      "description": "客户只能读取本人审核状态，管理员能读取证据和审核页面。",
+      "expect": {
+        "own_status": 200,
+        "review_status": "pending",
+        "other_status": 404,
+        "detail_status": 200,
+        "order_status": "paid",
+        "page_status": 200,
+        "page_contains": "批准放行"
+      }
+    },
+    {
+      "case_id": "M3-RECOVERY-MANUAL-STATUS",
+      "milestone": "M3",
+      "surface": "review_ui",
+      "action": "supplemental",
+      "description": "多次恢复失败后，管理端和客户端显示需人工处理。",
+      "expect": {
+        "detail_status": 200,
+        "processing_state": "needs_attention",
+        "recovery_attempts": 3,
+        "customer_status": 200,
+        "customer_message_contains": "联系人工客服核查"
+      }
+    },
+    {
+      "case_id": "M2-TOOL-DURABLE-PENDING",
+      "milestone": "M2",
+      "surface": "refund_tool",
+      "action": "supplemental",
+      "description": "重复提交大额退款仅建立一个待审核请求，批准前订单不退款。",
+      "expect": {
+        "review_count": 1,
+        "ticket_status": "escalated",
+        "order_status": "paid",
+        "dispatch_delta": 1,
+        "first_contains": "人工审核",
+        "second_contains": "人工审核"
+      }
+    },
+    {
+      "case_id": "M2-OUTBOX-RETRY",
+      "milestone": "M2",
+      "surface": "outbox",
+      "action": "supplemental",
+      "description": "首次派发失败后重试一次且只生成一个 Agent 任务。",
+      "expect": {
+        "first_error_contains": "eval transient",
+        "failed_status": "failed",
+        "sent_status": "sent",
+        "third_status": "already_sent",
+        "event_attempts": 2,
+        "agent_dispatch_count": 1
+      }
+    },
+    {
+      "case_id": "M2-APPROVED-TOOL-ONCE",
+      "milestone": "M2",
+      "surface": "refund_tool",
+      "action": "supplemental",
+      "description": "批准后退款只生效一次，重复调用保持幂等。",
+      "expect": {
+        "ticket_status": "resolved",
+        "order_status": "refunded",
+        "refund_audit_count": 1,
+        "first_contains": "refunded",
+        "second_contains": "已经退款"
+      }
+    }
+  ]
+}

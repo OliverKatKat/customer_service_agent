@@ -1,0 +1,11 @@
+{
+  "run_at_utc": "2026-10-20T13:00:57.102688+00:00",
+  "collection": "jd_vector_benchmark_20261020",
+  "vector_dimensions": 1024,
+  "tenant_count": 100,
+  "point_count_requested": 2000,
+  "queries_per_profile": 100,
+  "profiles": {},
+  "passed": false,
+  "error": "ResponseHandlingException: [WinError 10061] No connection could be made because the target machine actively refused it"
+}

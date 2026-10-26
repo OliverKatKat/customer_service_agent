@@ -1,0 +1,49 @@
+{
+  "dataset_version": "3.2.0",
+  "fixture_version": "3.0.0",
+  "run_at_utc": "2026-10-08T14:34:06.905902+00:00",
+  "scope": "M2/M3 API, review page and refund-tool transitions; Celery and external LLM stubbed",
+  "evaluation_type": "boundary_regression",
+  "declared_case_count": 9,
+  "supplemental_check_count": 6,
+  "total": 9,
+  "passed": 9,
+  "results": [
+    {
+      "case_id": "M2-REVIEW-CROSS-TENANT",
+      "passed": true
+    },
+    {
+      "case_id": "M2-REVIEW-DUPLICATE-APPROVAL",
+      "passed": true
+    },
+    {
+      "case_id": "M2-REVIEW-REJECTION",
+      "passed": true
+    },
+    {
+      "case_id": "M2-REVIEW-ROLE-VERSION-CODE",
+      "passed": true
+    },
+    {
+      "case_id": "M3-REVIEW-PAGE-AND-CUSTOMER-STATUS",
+      "passed": true
+    },
+    {
+      "case_id": "M3-RECOVERY-MANUAL-STATUS",
+      "passed": true
+    },
+    {
+      "case_id": "M2-TOOL-DURABLE-PENDING",
+      "passed": true
+    },
+    {
+      "case_id": "M2-OUTBOX-RETRY",
+      "passed": true
+    },
+    {
+      "case_id": "M2-APPROVED-TOOL-ONCE",
+      "passed": true
+    }
+  ]
+}

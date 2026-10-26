@@ -1,0 +1,70 @@
+{
+  "dataset_version": "m4-fault-1",
+  "execution_scope": "isolated eval worker with deterministic reply; no external LLM",
+  "case_id": "M4-PENDING-REVIEW-AMBIGUOUS-REPLY",
+  "actor": "eval_agent_alice",
+  "order_id": "E3E-ALICE-PAID-LARGE",
+  "input_topic": "[M4-PENDING-REVIEW-AMBIGUOUS-REPLY] 合成故障：待审核退款回复被注入完成式措辞",
+  "expected_action": "pending_review_status_grounded_reply",
+  "ticket_id": 930510,
+  "task_id": "7abf8329-ce67-4c70-8fc1-74068dcfd5a0",
+  "request_id": "6d3d0355-e90e-4fc0-adea-ab5379402976",
+  "forced_reply": "退款申请我已经处理好了。请耐心等待人工审核。",
+  "worker": {
+    "celery_state": "SUCCESS",
+    "result": {
+      "status": "success",
+      "output": "退款申请已提交人工审核，目前仍在等待审核，尚未退款。请耐心等待人工审核。",
+      "postflight_actions": [
+        "pending_review_status_grounded_reply"
+      ]
+    }
+  },
+  "task_api": {
+    "status": "completed",
+    "result": "退款申请已提交人工审核，目前仍在等待审核，尚未退款。请耐心等待人工审核。"
+  },
+  "events": [
+    {
+      "event": "progress",
+      "status": "started",
+      "message": "客服 Agent 已开始处理工单"
+    },
+    {
+      "event": "progress",
+      "status": "tool_running",
+      "message": "正在执行查询或处理步骤"
+    },
+    {
+      "event": "progress",
+      "status": "tool_step_completed",
+      "message": "查询步骤已返回，正在整理结果"
+    },
+    {
+      "event": "completed",
+      "status": "completed",
+      "message": "客服 Agent 已完成处理",
+      "result": "退款申请已提交人工审核，目前仍在等待审核，尚未退款。请耐心等待人工审核。"
+    }
+  ],
+  "database": {
+    "ticket_status": "escalated",
+    "review_count": 1,
+    "review_status": "pending",
+    "order_before": "paid",
+    "order_after": "paid"
+  },
+  "checks": {
+    "celery_finished": true,
+    "worker_success": true,
+    "expected_guard": true,
+    "task_api_completed": true,
+    "completed_event": true,
+    "ticket_escalated": true,
+    "review_pending": true,
+    "order_unchanged": true,
+    "false_claim_removed": true,
+    "pending_review_disclosed": true
+  },
+  "passed": true
+}

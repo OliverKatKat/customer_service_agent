@@ -1,0 +1,531 @@
+{
+  "dataset_version": "retrieval-1.0",
+  "handbook_sha256": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+  "tenant_id": "merchant_eval_agent",
+  "run_at_utc": "2026-10-20T03:31:59.659567+00:00",
+  "case_count": 15,
+  "modes": {
+    "bm25": {
+      "hit_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 1.0,
+      "latency_p50_ms": 374.719,
+      "latency_p95_ms": 411.754,
+      "cases": [
+        {
+          "id": "x1-pair-exact",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            7,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 379.566
+        },
+        {
+          "id": "x1-pair-paraphrase",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            5,
+            7
+          ],
+          "rank": 1,
+          "latency_ms": 336.408
+        },
+        {
+          "id": "x1-pair-led",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            7,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 374.719
+        },
+        {
+          "id": "firmware-exact",
+          "expected_paragraph_index": 1,
+          "retrieved_paragraph_indices": [
+            1,
+            4,
+            7
+          ],
+          "rank": 1,
+          "latency_ms": 350.79
+        },
+        {
+          "id": "unknown-model",
+          "expected_paragraph_index": 1,
+          "retrieved_paragraph_indices": [
+            1,
+            4,
+            2
+          ],
+          "rank": 1,
+          "latency_ms": 389.692
+        },
+        {
+          "id": "privacy",
+          "expected_paragraph_index": 9,
+          "retrieved_paragraph_indices": [
+            9,
+            1,
+            5
+          ],
+          "rank": 1,
+          "latency_ms": 347.903
+        },
+        {
+          "id": "channel",
+          "expected_paragraph_index": 2,
+          "retrieved_paragraph_indices": [
+            2,
+            9,
+            1
+          ],
+          "rank": 1,
+          "latency_ms": 347.615
+        },
+        {
+          "id": "preference",
+          "expected_paragraph_index": 2,
+          "retrieved_paragraph_indices": [
+            2,
+            5,
+            6
+          ],
+          "rank": 1,
+          "latency_ms": 344.555
+        },
+        {
+          "id": "charge-led",
+          "expected_paragraph_index": 3,
+          "retrieved_paragraph_indices": [
+            3,
+            0,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 386.547
+        },
+        {
+          "id": "computer",
+          "expected_paragraph_index": 4,
+          "retrieved_paragraph_indices": [
+            4,
+            8,
+            5
+          ],
+          "rank": 1,
+          "latency_ms": 406.221
+        },
+        {
+          "id": "microphone",
+          "expected_paragraph_index": 5,
+          "retrieved_paragraph_indices": [
+            5,
+            9,
+            8
+          ],
+          "rank": 1,
+          "latency_ms": 411.754
+        },
+        {
+          "id": "warranty",
+          "expected_paragraph_index": 6,
+          "retrieved_paragraph_indices": [
+            6,
+            0,
+            9
+          ],
+          "rank": 1,
+          "latency_ms": 1184.306
+        },
+        {
+          "id": "s1-pair",
+          "expected_paragraph_index": 7,
+          "retrieved_paragraph_indices": [
+            7,
+            4,
+            0
+          ],
+          "rank": 1,
+          "latency_ms": 373.373
+        },
+        {
+          "id": "r1-wan",
+          "expected_paragraph_index": 8,
+          "retrieved_paragraph_indices": [
+            8,
+            5,
+            9
+          ],
+          "rank": 1,
+          "latency_ms": 366.963
+        },
+        {
+          "id": "model-confusion",
+          "expected_paragraph_index": 7,
+          "retrieved_paragraph_indices": [
+            7,
+            1,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 400.944
+        }
+      ]
+    },
+    "dense": {
+      "hit_at_1": 0.9333,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 0.9556,
+      "latency_p50_ms": 786.536,
+      "latency_p95_ms": 1331.663,
+      "cases": [
+        {
+          "id": "x1-pair-exact",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            7,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 743.535
+        },
+        {
+          "id": "x1-pair-paraphrase",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            4,
+            7
+          ],
+          "rank": 1,
+          "latency_ms": 759.335
+        },
+        {
+          "id": "x1-pair-led",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            7,
+            4,
+            0
+          ],
+          "rank": 3,
+          "latency_ms": 823.445
+        },
+        {
+          "id": "firmware-exact",
+          "expected_paragraph_index": 1,
+          "retrieved_paragraph_indices": [
+            1,
+            6,
+            0
+          ],
+          "rank": 1,
+          "latency_ms": 1271.581
+        },
+        {
+          "id": "unknown-model",
+          "expected_paragraph_index": 1,
+          "retrieved_paragraph_indices": [
+            1,
+            0,
+            6
+          ],
+          "rank": 1,
+          "latency_ms": 1331.663
+        },
+        {
+          "id": "privacy",
+          "expected_paragraph_index": 9,
+          "retrieved_paragraph_indices": [
+            9,
+            2,
+            1
+          ],
+          "rank": 1,
+          "latency_ms": 733.388
+        },
+        {
+          "id": "channel",
+          "expected_paragraph_index": 2,
+          "retrieved_paragraph_indices": [
+            2,
+            9,
+            6
+          ],
+          "rank": 1,
+          "latency_ms": 1533.739
+        },
+        {
+          "id": "preference",
+          "expected_paragraph_index": 2,
+          "retrieved_paragraph_indices": [
+            2,
+            0,
+            9
+          ],
+          "rank": 1,
+          "latency_ms": 846.247
+        },
+        {
+          "id": "charge-led",
+          "expected_paragraph_index": 3,
+          "retrieved_paragraph_indices": [
+            3,
+            7,
+            0
+          ],
+          "rank": 1,
+          "latency_ms": 786.536
+        },
+        {
+          "id": "computer",
+          "expected_paragraph_index": 4,
+          "retrieved_paragraph_indices": [
+            4,
+            0,
+            7
+          ],
+          "rank": 1,
+          "latency_ms": 701.296
+        },
+        {
+          "id": "microphone",
+          "expected_paragraph_index": 5,
+          "retrieved_paragraph_indices": [
+            5,
+            0,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 746.024
+        },
+        {
+          "id": "warranty",
+          "expected_paragraph_index": 6,
+          "retrieved_paragraph_indices": [
+            6,
+            0,
+            1
+          ],
+          "rank": 1,
+          "latency_ms": 846.545
+        },
+        {
+          "id": "s1-pair",
+          "expected_paragraph_index": 7,
+          "retrieved_paragraph_indices": [
+            7,
+            4,
+            0
+          ],
+          "rank": 1,
+          "latency_ms": 1294.491
+        },
+        {
+          "id": "r1-wan",
+          "expected_paragraph_index": 8,
+          "retrieved_paragraph_indices": [
+            8,
+            0,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 748.743
+        },
+        {
+          "id": "model-confusion",
+          "expected_paragraph_index": 7,
+          "retrieved_paragraph_indices": [
+            7,
+            0,
+            1
+          ],
+          "rank": 1,
+          "latency_ms": 785.792
+        }
+      ]
+    },
+    "hybrid": {
+      "hit_at_1": 0.9333,
+      "recall_at_3": 1.0,
+      "mrr_at_3": 0.9667,
+      "latency_p50_ms": 743.908,
+      "latency_p95_ms": 1979.94,
+      "cases": [
+        {
+          "id": "x1-pair-exact",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            7,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 2021.31
+        },
+        {
+          "id": "x1-pair-paraphrase",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            0,
+            7,
+            5
+          ],
+          "rank": 1,
+          "latency_ms": 701.369
+        },
+        {
+          "id": "x1-pair-led",
+          "expected_paragraph_index": 0,
+          "retrieved_paragraph_indices": [
+            7,
+            0,
+            4
+          ],
+          "rank": 2,
+          "latency_ms": 1979.94
+        },
+        {
+          "id": "firmware-exact",
+          "expected_paragraph_index": 1,
+          "retrieved_paragraph_indices": [
+            1,
+            4,
+            7
+          ],
+          "rank": 1,
+          "latency_ms": 730.894
+        },
+        {
+          "id": "unknown-model",
+          "expected_paragraph_index": 1,
+          "retrieved_paragraph_indices": [
+            1,
+            4,
+            2
+          ],
+          "rank": 1,
+          "latency_ms": 1471.745
+        },
+        {
+          "id": "privacy",
+          "expected_paragraph_index": 9,
+          "retrieved_paragraph_indices": [
+            9,
+            1,
+            5
+          ],
+          "rank": 1,
+          "latency_ms": 710.865
+        },
+        {
+          "id": "channel",
+          "expected_paragraph_index": 2,
+          "retrieved_paragraph_indices": [
+            2,
+            9,
+            1
+          ],
+          "rank": 1,
+          "latency_ms": 761.422
+        },
+        {
+          "id": "preference",
+          "expected_paragraph_index": 2,
+          "retrieved_paragraph_indices": [
+            2,
+            5,
+            6
+          ],
+          "rank": 1,
+          "latency_ms": 1658.683
+        },
+        {
+          "id": "charge-led",
+          "expected_paragraph_index": 3,
+          "retrieved_paragraph_indices": [
+            3,
+            0,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 683.993
+        },
+        {
+          "id": "computer",
+          "expected_paragraph_index": 4,
+          "retrieved_paragraph_indices": [
+            4,
+            8,
+            5
+          ],
+          "rank": 1,
+          "latency_ms": 726.244
+        },
+        {
+          "id": "microphone",
+          "expected_paragraph_index": 5,
+          "retrieved_paragraph_indices": [
+            5,
+            9,
+            8
+          ],
+          "rank": 1,
+          "latency_ms": 728.131
+        },
+        {
+          "id": "warranty",
+          "expected_paragraph_index": 6,
+          "retrieved_paragraph_indices": [
+            6,
+            0,
+            9
+          ],
+          "rank": 1,
+          "latency_ms": 768.927
+        },
+        {
+          "id": "s1-pair",
+          "expected_paragraph_index": 7,
+          "retrieved_paragraph_indices": [
+            7,
+            4,
+            0
+          ],
+          "rank": 1,
+          "latency_ms": 721.749
+        },
+        {
+          "id": "r1-wan",
+          "expected_paragraph_index": 8,
+          "retrieved_paragraph_indices": [
+            8,
+            5,
+            9
+          ],
+          "rank": 1,
+          "latency_ms": 746.238
+        },
+        {
+          "id": "model-confusion",
+          "expected_paragraph_index": 7,
+          "retrieved_paragraph_indices": [
+            7,
+            1,
+            4
+          ],
+          "rank": 1,
+          "latency_ms": 743.908
+        }
+      ]
+    }
+  }
+}

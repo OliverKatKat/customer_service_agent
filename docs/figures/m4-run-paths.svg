@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 670 286" role="img" aria-labelledby="title desc">
+<title id="title">60 次合成评估的执行路径与评分</title>
+<desc id="desc">API 身份拦截 12 次，意图分类后拦截 3 次，Planner 路径自动评分通过 44 次，词面评分误判 1 次。</desc>
+<rect width="670" height="286" fill="#ffffff"/>
+<text x="28" y="35" fill="#111827" font-size="20" font-weight="600">运行去向 · 60 次</text>
+<circle cx="132" cy="146" r="78" fill="none" stroke="#e5e7eb" stroke-width="35"/>
+<circle cx="132" cy="146" r="78" fill="none" stroke="#2563eb" stroke-width="35" stroke-dasharray="98.018 392.071" stroke-dashoffset="-0.000" transform="rotate(-90 132 146)"><title>API 身份拦截：12 次</title></circle>
+<circle cx="132" cy="146" r="78" fill="none" stroke="#8b5cf6" stroke-width="35" stroke-dasharray="24.504 465.584" stroke-dashoffset="-98.018" transform="rotate(-90 132 146)"><title>意图分类后拦截：3 次</title></circle>
+<circle cx="132" cy="146" r="78" fill="none" stroke="#0d9488" stroke-width="35" stroke-dasharray="359.398 130.690" stroke-dashoffset="-122.522" transform="rotate(-90 132 146)"><title>模型路径通过：44 次</title></circle>
+<circle cx="132" cy="146" r="78" fill="none" stroke="#f59e0b" stroke-width="35" stroke-dasharray="8.168 481.920" stroke-dashoffset="-481.920" transform="rotate(-90 132 146)"><title>词面评分误判：1 次</title></circle>
+<text x="132" y="153" fill="#111827" font-size="31" font-weight="700" text-anchor="middle">60</text>
+<text x="132" y="177" fill="#6b7280" font-size="13" text-anchor="middle">次运行</text>
+<rect x="293" y="74" width="13" height="13" fill="#2563eb" rx="2"/>
+<text x="318" y="87" fill="#1f2937" font-size="15">API 身份拦截</text>
+<text x="633" y="87" fill="#111827" font-size="15" text-anchor="end">12 次 · 20.0%</text>
+<rect x="293" y="120" width="13" height="13" fill="#8b5cf6" rx="2"/>
+<text x="318" y="133" fill="#1f2937" font-size="15">意图分类后拦截</text>
+<text x="633" y="133" fill="#111827" font-size="15" text-anchor="end">3 次 · 5.0%</text>
+<rect x="293" y="166" width="13" height="13" fill="#0d9488" rx="2"/>
+<text x="318" y="179" fill="#1f2937" font-size="15">模型路径通过</text>
+<text x="633" y="179" fill="#111827" font-size="15" text-anchor="end">44 次 · 73.3%</text>
+<rect x="293" y="212" width="13" height="13" fill="#f59e0b" rx="2"/>
+<text x="318" y="225" fill="#1f2937" font-size="15">词面评分误判</text>
+<text x="633" y="225" fill="#111827" font-size="15" text-anchor="end">1 次 · 1.7%</text>
+</svg>

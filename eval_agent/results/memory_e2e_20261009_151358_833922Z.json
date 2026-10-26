@@ -1,0 +1,115 @@
+{
+  "evaluation_type": "customer_memory_e2e",
+  "run_at_utc": "2026-10-09T15:13:58.832771+00:00",
+  "tenant_id": "merchant_eval_agent",
+  "checks": {
+    "source_written_with_provenance": true,
+    "same_customer_tool_called": true,
+    "same_customer_tool_grounded": true,
+    "same_customer_direct_grounded": true,
+    "same_customer_reply_uses_preference": true,
+    "source_reply_does_not_deny_storage": true,
+    "same_customer_reply_no_contact_promise": true,
+    "other_customer_tool_called": true,
+    "other_customer_tool_no_match": true,
+    "other_customer_reply_no_false_registration_claim": true,
+    "other_customer_direct_no_match": true,
+    "cross_customer_scope_denied": true,
+    "cross_tenant_scope_denied": true
+  },
+  "passed": true,
+  "note": "Reply meaning and unsupported claims still require human review; token/LLM costs are not scored.",
+  "evidence": {
+    "source_ticket": {
+      "ticket_id": 930482,
+      "task_id": "9157b2fa-b28d-436b-a696-70c9ba7d4734",
+      "request_id": "14904d21-d508-478c-923e-6703a2ac8264",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "您好，我来帮您处理蓝牙连接不稳定的问题。\n\n**关于排查建议**\n\n现有资料仅覆盖 **EVAL-SOUND X1** 型号。如果您的耳机正是这个型号，可以按以下步骤排查：\n\n1. **先收集信息**：请告诉我您的手机型号、系统版本，以及断连通常发生在什么场景（例如走动时、隔墙时、多设备切换时）。[K1]\n2. **确认电量**：请确认耳机和充电盒都有电。[K1]\n3. **重新配对**：在手机蓝牙设置中删除 EVAL-SOUND X1 的配对记录，然后按住充电盒背面的圆形配对键 **7 秒**，直到白色指示灯连续闪烁，再重新配对。[K1]\n4. **若仍然断连**：这种情况需要人工客服核对您的购买记录和保修资格，我这边无法直接承诺换货。[K1]\n5. **固件更新**：如果您的官方应用显示有可用固件更新，可以尝试在官方应用中更新固件。[K2]\n\n如果您的耳机**不是** EVAL-SOUND X1，现有资料不足以提供对应的排查步骤，需要人工客服进一步核实。[K2]\n\n另外提醒一下：我们不会向您索要密码、验证码或支付信息，请留意防范。[K2]\n\n**关于邮件联系偏好**\n\n已收到您希望以后通过邮件联系的偏好，系统会尝试记录，后续可以再核实。不过需要说明的是，本商户目前仅通过站内客服处理售后工单，我这边没有主动发送邮件或安排回访的能力，因此记录该偏好并不等于已经安排了后续邮件联系。[K3] 如果您需要实际的邮件回复，建议联系人工客服协助安排。\n\n请问您的耳机型号是 EVAL-SOUND X1 吗？方便的话也请提供手机型号和断连场景，我可以给出更针对性的建议。",
+      "postflight_actions": []
+    },
+    "stored_preference": {
+      "text": "联系偏好：邮件联系",
+      "metadata": {
+        "tenant_id": "merchant_eval_agent",
+        "customer_id": "eval_memory_alice_3",
+        "source_ticket_id": "930482",
+        "type": "user_episodic_memory",
+        "category": "contact_preference",
+        "timestamp": "2026-10-09T15:13:44.964691+00:00",
+        "source": "local_explicit_preference_rule"
+      }
+    },
+    "same_customer_ticket": {
+      "ticket_id": 930483,
+      "task_id": "af02d322-ad7d-4ee1-ac1d-e30e5812da29",
+      "request_id": "925c9bb3-8980-4ff3-a8d3-a4d64ae955de",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "您之前登记的联系偏好是**邮件联系**（来自工单 930482）。\n\n关于耳机蓝牙连接不稳定的问题，我需要先说明一下：目前我这边没有可用的设备日志或型号专属的排障工具，所以无法直接为您查询连接记录或给出针对具体型号的按键、重置步骤。为了准确处理，建议您提供以下信息，或直接联系人工客服进一步核实：\n\n- 耳机型号\n- 手机/电脑型号及系统版本\n- 蓝牙断连的具体表现（如频繁掉线、单耳无声、连接后无声音等）\n- 是否已尝试过重新配对、清除配对记录\n\n另外提醒一下：我这边没有主动发送邮件或安排回访的工具，所以无法承诺稍后通过邮件跟进。如果您希望以邮件方式获得回复，可以联系人工客服安排。\n\n需要我帮您查一下这款耳机的官方排障资料吗？如果有型号，我可以检索知识库看看有没有对应的说明。",
+      "postflight_actions": []
+    },
+    "same_customer_checkpoint": {
+      "selected_skill": null,
+      "tool_call_sequence": [
+        "search_user_memory"
+      ],
+      "memory_tool_results": [
+        {
+          "status": "found",
+          "memories": [
+            {
+              "timestamp": "2026-10-09T15:13:44.964691+00:00",
+              "source_ticket_id": "930482",
+              "text": "联系偏好：邮件联系"
+            }
+          ]
+        }
+      ]
+    },
+    "same_customer_direct_read": {
+      "status": "found",
+      "memories": [
+        {
+          "timestamp": "2026-10-09T15:13:44.964691+00:00",
+          "source_ticket_id": "930482",
+          "text": "联系偏好：邮件联系"
+        }
+      ]
+    },
+    "other_customer_ticket": {
+      "ticket_id": 930484,
+      "task_id": "d822fec5-826d-4d98-87e1-05eb48ca361c",
+      "request_id": "8ecfddcb-f105-476d-bb8a-0d8a66f921a1",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "我查了一下，目前系统里没有检索到您之前登记过的联系偏好记录，所以暂时无法确认您希望用哪种方式联系。\n\n如果您愿意，可以现在告诉我您偏好的联系方式（比如邮件或电话），系统会尝试记录，后续可以再核实。\n\n另外关于耳机蓝牙连接不稳定的问题，为了帮您排查，方便提供一下耳机的具体型号吗？另外也请说明一下：是连接手机还是电脑、大概在什么场景下（比如走动时、隔墙时）出现断连或卡顿？有了这些信息我才能给出针对性的排查步骤。",
+      "postflight_actions": []
+    },
+    "other_customer_checkpoint": {
+      "selected_skill": null,
+      "tool_call_sequence": [
+        "search_user_memory"
+      ],
+      "memory_tool_results": [
+        {
+          "status": "no_match",
+          "memories": []
+        }
+      ]
+    },
+    "other_customer_direct_read": {
+      "status": "no_match",
+      "memories": []
+    },
+    "cross_customer_direct_read": {
+      "status": "no_memory_scope",
+      "memories": []
+    },
+    "cross_tenant_direct_read": {
+      "status": "no_memory_scope",
+      "memories": []
+    }
+  }
+}

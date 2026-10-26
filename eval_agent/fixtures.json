@@ -1,0 +1,17 @@
+{
+  "fixture_version": "1.0.0",
+  "tenant": {"id": "merchant_eval_agent", "name": "Agent E2E Evaluation Merchant"},
+  "users": [
+    {"id": 940101, "username": "eval_agent_alice", "role": "user"},
+    {"id": 940102, "username": "eval_agent_bob", "role": "user"}
+  ],
+  "orders": [
+    {"id": 940201, "order_id": "E3E-ALICE-PAID-SMALL", "customer_id": "eval_agent_alice", "status": "paid", "amount": 199},
+    {"id": 940202, "order_id": "E3E-ALICE-PAID-LARGE", "customer_id": "eval_agent_alice", "status": "paid", "amount": 1599},
+    {"id": 940203, "order_id": "E3E-ALICE-PENDING", "customer_id": "eval_agent_alice", "status": "pending", "amount": 99},
+    {"id": 940204, "order_id": "E3E-ALICE-OUT-STOCK", "customer_id": "eval_agent_alice", "status": "out_of_stock", "amount": 299},
+    {"id": 940205, "order_id": "E3E-ALICE-SHIPPED", "customer_id": "eval_agent_alice", "status": "shipped", "amount": 288},
+    {"id": 940206, "order_id": "E3E-ALICE-REFUNDED", "customer_id": "eval_agent_alice", "status": "refunded", "amount": 88},
+    {"id": 940207, "order_id": "E3E-BOB-PAID", "customer_id": "eval_agent_bob", "status": "paid", "amount": 349}
+  ]
+}

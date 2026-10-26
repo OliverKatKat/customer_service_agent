@@ -1,0 +1,65 @@
+{
+  "evaluation_type": "customer_memory_lifecycle_e2e",
+  "run_at_utc": "2026-10-20T03:38:01.435072+00:00",
+  "run_number": 43,
+  "checks": {
+    "initial_email": true,
+    "phone_replaces_email": true,
+    "revoke_hides_preference": true,
+    "stale_job_skipped": true,
+    "stale_job_did_not_restore": true
+  },
+  "passed": true,
+  "evidence": {
+    "email": {
+      "ticket_id": 930335,
+      "memory_write_job": {
+        "state": "SUCCESS",
+        "stored": 1
+      },
+      "direct_read": {
+        "status": "found",
+        "memories": [
+          {
+            "timestamp": "2026-10-20T03:37:44.774475+00:00",
+            "source_ticket_id": "930335",
+            "text": "联系偏好：邮件联系"
+          }
+        ]
+      }
+    },
+    "phone": {
+      "ticket_id": 930336,
+      "memory_write_job": {
+        "state": "SUCCESS",
+        "stored": 1
+      },
+      "direct_read": {
+        "status": "found",
+        "memories": [
+          {
+            "timestamp": "2026-10-20T03:37:54.855606+00:00",
+            "source_ticket_id": "930336",
+            "text": "联系偏好：电话联系"
+          }
+        ]
+      }
+    },
+    "revoke": {
+      "ticket_id": 930337,
+      "memory_write_job": {
+        "state": "SUCCESS",
+        "stored": 1
+      },
+      "direct_read": {
+        "status": "no_match",
+        "memories": []
+      }
+    },
+    "stale_write_count": 0,
+    "after_stale": {
+      "status": "no_match",
+      "memories": []
+    }
+  }
+}

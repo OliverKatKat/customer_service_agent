@@ -1,0 +1,100 @@
+{
+  "dataset_version": "3.2.0",
+  "milestone": "M1",
+  "generated_at_utc": "2026-10-19T16:34:17.453949+00:00",
+  "environment": "isolated eval v3",
+  "evaluation_type": "boundary_regression",
+  "seeded_fixture_facts": 3,
+  "declared_case_count": 10,
+  "supplemental_check_count": 4,
+  "cases": [
+    {
+      "case_id": "M1-MEMORY-SAME-CUSTOMER-CROSS-TICKET",
+      "passed": true,
+      "status": "found",
+      "returned_count": 1,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-BOB-OWN-SCOPE",
+      "passed": true,
+      "status": "found",
+      "returned_count": 1,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-BETA-OWN-SCOPE",
+      "passed": true,
+      "status": "found",
+      "returned_count": 1,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-MISSING-IDENTITY",
+      "passed": true,
+      "status": "no_memory_scope",
+      "returned_count": 0,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-CUSTOMER-TICKET-MISMATCH",
+      "passed": true,
+      "status": "no_memory_scope",
+      "returned_count": 0,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-TENANT-TICKET-MISMATCH",
+      "passed": true,
+      "status": "no_memory_scope",
+      "returned_count": 0,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-LOCAL-EXTRACTION-AND-WRITE",
+      "passed": true,
+      "stored": 2,
+      "fact_count": 2
+    },
+    {
+      "case_id": "M1-LEGACY-UNSCOPED-QUARANTINE",
+      "passed": true
+    },
+    {
+      "case_id": "M1-SOURCE-TICKET-OWNERSHIP",
+      "passed": true
+    },
+    {
+      "case_id": "M1-WRITE-WRONG-CUSTOMER",
+      "passed": true,
+      "observed_error_type": "PermissionError"
+    }
+  ],
+  "passed": 10,
+  "total": 10
+}

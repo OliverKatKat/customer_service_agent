@@ -1,0 +1,20 @@
+{
+  "run_at_utc": "2026-10-06T12:48:39.756968+00:00",
+  "scope": "isolated rollback-only review recovery; LLM and Celery queue stubbed",
+  "total": 3,
+  "passed": 3,
+  "results": [
+    {
+      "case_id": "M2-STALLED-APPROVAL-RECOVERY",
+      "passed": true
+    },
+    {
+      "case_id": "M2-COMPLETED-OUTBOX-REPLAY",
+      "passed": true
+    },
+    {
+      "case_id": "M2-RECOVERY-BOUND-AND-MANUAL-REVIEW",
+      "passed": true
+    }
+  ]
+}

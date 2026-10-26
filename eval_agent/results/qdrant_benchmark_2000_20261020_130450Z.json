@@ -1,0 +1,28 @@
+{
+  "run_at_utc": "2026-10-20T13:04:47.640081+00:00",
+  "collection": "jd_vector_benchmark_20261020",
+  "vector_dimensions": 1024,
+  "tenant_count": 100,
+  "point_count_requested": 2000,
+  "queries_per_profile": 100,
+  "profiles": {
+    "1": {
+      "queries": 100,
+      "scope_and_top1_correct": 100,
+      "p50_ms": 2.518,
+      "p95_ms": 24.345,
+      "throughput_qps": 202.85
+    },
+    "4": {
+      "queries": 100,
+      "scope_and_top1_correct": 100,
+      "p50_ms": 5.041,
+      "p95_ms": 8.377,
+      "throughput_qps": 744.81
+    }
+  },
+  "passed": true,
+  "ingest_seconds": 1.514,
+  "point_count_observed": 2000,
+  "collection_removed": true
+}

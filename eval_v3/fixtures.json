@@ -1,0 +1,197 @@
+{
+  "fixture_version": "3.0.0",
+  "fixed_time_utc": "2026-10-05T00:00:00",
+  "tenants": [
+    {
+      "id": "merchant_eval_alpha",
+      "name": "Eval Alpha Merchant",
+      "is_active": true
+    },
+    {
+      "id": "merchant_eval_beta",
+      "name": "Eval Beta Merchant",
+      "is_active": true
+    }
+  ],
+  "users": [
+    {
+      "id": 930101,
+      "tenant_id": "merchant_eval_alpha",
+      "username": "eval_alpha_admin",
+      "role": "admin",
+      "is_active": true
+    },
+    {
+      "id": 930102,
+      "tenant_id": "merchant_eval_alpha",
+      "username": "eval_alpha_alice",
+      "role": "user",
+      "is_active": true
+    },
+    {
+      "id": 930103,
+      "tenant_id": "merchant_eval_alpha",
+      "username": "eval_alpha_bob",
+      "role": "user",
+      "is_active": true
+    },
+    {
+      "id": 930104,
+      "tenant_id": "merchant_eval_beta",
+      "username": "eval_beta_admin",
+      "role": "admin",
+      "is_active": true
+    },
+    {
+      "id": 930105,
+      "tenant_id": "merchant_eval_beta",
+      "username": "eval_beta_alice",
+      "role": "user",
+      "is_active": true
+    },
+    {
+      "id": 930106,
+      "tenant_id": "merchant_eval_beta",
+      "username": "eval_beta_disabled",
+      "role": "user",
+      "is_active": false
+    }
+  ],
+  "orders": [
+    {
+      "id": 930201,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-PAID-SMALL",
+      "status": "paid",
+      "amount": 199
+    },
+    {
+      "id": 930202,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-PAID-LARGE",
+      "status": "paid",
+      "amount": 1599
+    },
+    {
+      "id": 930203,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-SHIPPED",
+      "status": "shipped",
+      "amount": 288
+    },
+    {
+      "id": 930204,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-REFUNDED",
+      "status": "refunded",
+      "amount": 88
+    },
+    {
+      "id": 930205,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_bob",
+      "order_id": "E3A-BOB-PAID",
+      "status": "paid",
+      "amount": 349
+    },
+    {
+      "id": 930206,
+      "tenant_id": "merchant_eval_beta",
+      "customer_id": "eval_beta_alice",
+      "order_id": "E3B-ALICE-PAID",
+      "status": "paid",
+      "amount": 199
+    },
+    {
+      "id": 930207,
+      "tenant_id": "merchant_eval_beta",
+      "customer_id": "eval_beta_disabled",
+      "order_id": "E3B-DISABLED-PAID",
+      "status": "paid",
+      "amount": 80
+    }
+  ],
+  "tickets": [
+    {
+      "id": 930301,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-PAID-SMALL",
+      "title": "咨询小额订单退款",
+      "description": "我想申请退款，请先核对订单状态。",
+      "status": "pending"
+    },
+    {
+      "id": 930302,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": null,
+      "title": "跨工单回访",
+      "description": "请沿用我此前明确表达的联系偏好。",
+      "status": "pending"
+    },
+    {
+      "id": 930303,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_bob",
+      "order_id": "E3A-BOB-PAID",
+      "title": "Bob 的售后问题",
+      "description": "请查询我的订单。",
+      "status": "pending"
+    },
+    {
+      "id": 930304,
+      "tenant_id": "merchant_eval_beta",
+      "customer_id": "eval_beta_alice",
+      "order_id": "E3B-ALICE-PAID",
+      "title": "Beta 客户的退款咨询",
+      "description": "请查询我的订单。",
+      "status": "pending"
+    },
+    {
+      "id": 930305,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-PAID-LARGE",
+      "title": "大额退款待人工审核",
+      "description": "请先提交人工审核，批准前不执行退款。",
+      "status": "pending"
+    },
+    {
+      "id": 930306,
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "order_id": "E3A-ALICE-SHIPPED",
+      "title": "已发货订单退款咨询",
+      "description": "请核对物流状态再给出方案。",
+      "status": "pending"
+    }
+  ],
+  "memory_facts_for_m1": [
+    {
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_alice",
+      "source_ticket_id": 930301,
+      "utterance": "以后请通过邮件联系我。",
+      "expected_fact": "联系偏好：邮件联系"
+    },
+    {
+      "tenant_id": "merchant_eval_alpha",
+      "customer_id": "eval_alpha_bob",
+      "source_ticket_id": 930303,
+      "utterance": "我希望通过站内信联系。",
+      "expected_fact": "联系偏好：站内信联系"
+    },
+    {
+      "tenant_id": "merchant_eval_beta",
+      "customer_id": "eval_beta_alice",
+      "source_ticket_id": 930304,
+      "utterance": "请优先通过电话联系我。",
+      "expected_fact": "联系偏好：电话联系"
+    }
+  ]
+}

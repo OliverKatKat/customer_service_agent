@@ -1,0 +1,48 @@
+# --- Web 框架与配置 ---
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-multipart
+python-dotenv
+
+# --- 登录鉴权与加密 (Auth) ---
+python-jose[cryptography]
+bcrypt
+
+# --- 数据库与异步驱动 (Database) ---
+SQLAlchemy
+alembic
+asyncpg
+psycopg[binary]
+psycopg-pool
+
+# --- 异步队列与限流重试 ---
+celery
+redis
+tenacity
+mcp
+
+# --- 可观测性监控 (O11y) ---
+opentelemetry-api==1.41.1
+opentelemetry-sdk==1.41.1
+opentelemetry-instrumentation-fastapi==0.62b1
+prometheus-fastapi-instrumentator
+
+# --- AI 与 LangGraph 智能体 ---
+openai
+langchain
+langchain-core
+langchain-openai
+langchain-classic
+langchain-community
+langchain-qdrant
+qdrant-client
+rank-bm25
+tiktoken
+langgraph
+langgraph-checkpoint
+langgraph-checkpoint-postgres
+langsmith
+# --- Eval v3 in-process HTTP harness ---
+httpx==0.28.1

@@ -1,0 +1,40 @@
+name: agent_eval_v3
+
+# Standalone eval infrastructure. Do not merge with the live docker-compose.yml.
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: eval_v3
+      POSTGRES_PASSWORD: ${EVAL_V3_DB_PASSWORD:?Set EVAL_V3_DB_PASSWORD in infra/eval-v3/.env}
+      POSTGRES_DB: agent_eval_v3
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - eval_v3_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eval_v3 -d agent_eval_v3"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    ports:
+      - "127.0.0.1:56379:6379"
+    volumes:
+      - eval_v3_redis_data:/data
+
+  qdrant:
+    image: qdrant/qdrant@sha256:45f8e3ddc2570a4d029877e1b5ec1045c19b3852b4e22a55c7f43b05aea0ca89
+    ports:
+      - "127.0.0.1:56333:6333"
+      - "127.0.0.1:56334:6334"
+    volumes:
+      - eval_v3_qdrant_data:/qdrant/storage
+
+volumes:
+  eval_v3_postgres_data:
+  eval_v3_redis_data:
+  eval_v3_qdrant_data:

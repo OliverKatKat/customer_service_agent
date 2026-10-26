@@ -1,0 +1,197 @@
+{
+  "evaluation_type": "tenant_company_rag_e2e",
+  "run_at_utc": "2026-10-20T03:38:51.309473+00:00",
+  "tenant_id": "merchant_eval_agent",
+  "checks": {
+    "known_tool_called": true,
+    "known_tool_grounded": true,
+    "known_evidence_tenant_source": true,
+    "known_reply_has_seven_seconds": true,
+    "known_final_citations_valid": true,
+    "unknown_tool_called": true,
+    "unknown_reply_no_invented_reset": false,
+    "unknown_tool_returns_only_tenant_evidence": true,
+    "unknown_final_citations_valid": true,
+    "same_customer_direct_grounded": true,
+    "cross_customer_scope_denied": true,
+    "cross_tenant_scope_denied": true
+  },
+  "passed": false,
+  "note": "Unknown-model answer and citation use still need human review; this is a two-ticket prototype sample.",
+  "evidence": {
+    "known_ticket": {
+      "ticket_id": 930338,
+      "task_id": "19fff0c2-31ba-479c-a1ce-a5f3f448ae6f",
+      "request_id": "5d45d3d3-ecd0-4f39-b1f8-7fe9ed5d8567",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "您好，针对 EVAL-SOUND X1 耳机蓝牙间歇性断连，官方排障文档中的重置配对操作是：\n\n**按住充电盒背面的圆形配对键 7 秒**，直到白色指示灯连续闪烁，然后重新配对 [K1]。\n\n完整的排障顺序建议如下：\n\n1. 先确认一下您的手机型号、系统版本，以及断连通常发生在什么场景（例如通话、看视频、走动时）[K1]。\n2. 确认耳机和充电盒都有电 [K1]。\n3. 在手机蓝牙设置中删除 EVAL-SOUND X1 的旧配对记录 [K1]。\n4. 按住充电盒背面的圆形配对键 **7 秒**，等白色指示灯连续闪烁后重新配对 [K1]。\n5. 如果仍然断连，请不要着急，可以联系人工客服核对购买记录和保修资格，由他们进一步处理 [K1]。\n\n另外提醒一点：如果官方应用里显示有可用的固件更新，也可以在应用中更新固件试试 [K2]。请注意不要误用其他型号的按键时长（例如 EVAL-SOUND S1 音箱是顶部蓝牙键 3 秒，不适用于 X1 耳机）[K4]。\n\n如果方便，请告诉我您的手机型号和断连场景，我可以帮您进一步缩小排查范围。",
+      "postflight_actions": [],
+      "memory_write_task_id": null
+    },
+    "known_checkpoint": {
+      "selected_skill": null,
+      "tool_call_sequence": [
+        "consult_company_knowledge"
+      ],
+      "knowledge_tool_results": [
+        {
+          "agent": "company_knowledge",
+          "status": "grounded",
+          "answer": "针对 EVAL-SOUND X1 耳机蓝牙间歇性断连，重置配对的操作是：**按住充电盒背面的圆形配对键 7 秒**，直到白色指示灯连续闪烁，再重新配对 [K1]。\n\n完整排障顺序如下：\n\n1. **先询问信息**：客服应先询问手机型号、系统版本和断连发生场景 [K1]。\n2. **确认电量**：确认耳机与充电盒均有电 [K1]。\n3. **删除旧配对**：请客户在手机蓝牙设置中删除 EVAL-SOUND X1 配对记录 [K1]。\n4. **重置并重新配对**：按住充电盒背面的圆形配对键 **7 秒**，直到白色指示灯连续闪烁，再重新配对 [K1]。\n5. **仍断连时**：不应自行承诺换货，应请人工客服核对购买记录和保修资格 [K1]。\n\n补充说明：\n- 固件更新仅在客户提供 EVAL-SOUND X1 型号且官方应用显示可用固件更新时才能建议 [K2]。\n- 注意不要误用其他型号的按键时长：EVAL-SOUND S1 音箱是顶部蓝牙键 3 秒，该步骤不得用于 X1 耳机 [K4]；知识库没有其他耳机型号的重置按键时长，未知型号须说明资料不足 [K2]。",
+          "evidence": [
+            {
+              "evidence_id": "K1",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第一部分：EVAL-SOUND X1 耳机蓝牙连接排查",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第一部分：EVAL-SOUND X1 耳机蓝牙连接排查\n本合成商户的 EVAL-SOUND X1 耳机若出现间歇性断连，客服应先询问手机型号、系统版本和断连发生场景。确认耳机与充电盒均有电后，请客户在手机蓝牙设置中删除 EVAL-SOUND X1 配对记录，并按住充电盒背面的圆形配对键 7 秒，直到白色指示灯连续闪烁，再重新配对。若仍断连，不应自行承诺换货，应请人工客服核对购买记录和保修资格。"
+            },
+            {
+              "evidence_id": "K2",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第二部分：EVAL-SOUND X1 固件与数据边界",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第二部分：EVAL-SOUND X1 固件与数据边界\n只有客户提供 EVAL-SOUND X1 型号且官方应用显示可用固件更新时，才能建议客户在官方应用中更新固件。客服不能要求客户提供密码、验证码或支付信息。知识库没有其他耳机型号的重置按键时长，遇到未知型号必须说明资料不足。"
+            },
+            {
+              "evidence_id": "K3",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第五部分：EVAL-SOUND X1 电脑配对",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第五部分：EVAL-SOUND X1 电脑配对\nEVAL-SOUND X1 与电脑首次配对时，应先在电脑蓝牙列表中搜索 EVAL-SOUND X1。若电脑未找到设备，应先确认电脑蓝牙已开启；该流程不要求客户重置耳机。"
+            },
+            {
+              "evidence_id": "K4",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第八部分：EVAL-SOUND S1 音箱配对",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第八部分：EVAL-SOUND S1 音箱配对\nEVAL-SOUND S1 是音箱，不是 X1 耳机。S1 首次配对时按机身顶部蓝牙键 3 秒；该步骤不得用于 X1 耳机。"
+            },
+            {
+              "evidence_id": "K5",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第六部分：EVAL-SOUND X1 通话麦克风",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第六部分：EVAL-SOUND X1 通话麦克风\nEVAL-SOUND X1 通话声音较小时，客服可请客户检查手机通话应用的麦克风权限与耳机麦克风开口是否被遮挡。不得据此直接认定硬件损坏。"
+            }
+          ]
+        }
+      ]
+    },
+    "unknown_ticket": {
+      "ticket_id": 930339,
+      "task_id": "dc0f021a-36f7-443a-b669-9a3bc3ecf909",
+      "request_id": "70478f76-b654-4149-ba45-8e1eddce7475",
+      "celery_state": "SUCCESS",
+      "task_status": "success",
+      "reply": "很抱歉，关于 **EVAL-SOUND X2** 的重置按键位置和按住时长，公司知识库中**没有相关资料**，我不能凭猜测给您具体步骤 [K1]。\n\n需要说明的是，知识库中确实有重置操作说明，但那是针对 **EVAL-SOUND X1** 的：按住充电盒背面的圆形配对键 7 秒，直到白色指示灯连续闪烁，再重新配对 [K2]。这个 7 秒流程属于 X1 的配对重置，**不能套用到 X2 上**，所以我不建议您按这个时长操作 X2。\n\n针对您 X2 的蓝牙断连问题，建议您：\n1. 先确认耳机与充电盒都有电；\n2. 在手机蓝牙设置中删除 X2 的配对记录，然后重新配对；\n3. 如果仍然断连，请联系人工客服，由他们核对 X2 的官方重置说明以及您的购买记录和保修资格。\n\n另外，如果您方便提供手机型号、系统版本和断连发生的具体场景（例如通话时、走动时、连接多设备时），人工客服排查会更高效。",
+      "postflight_actions": [],
+      "memory_write_task_id": null
+    },
+    "unknown_checkpoint": {
+      "selected_skill": null,
+      "tool_call_sequence": [
+        "consult_company_knowledge"
+      ],
+      "knowledge_tool_results": [
+        {
+          "agent": "company_knowledge",
+          "status": "grounded",
+          "answer": "资料不足。现有知识证据中没有 EVAL-SOUND X2 耳机重置按键按住时长的信息；知识库明确说明没有其他耳机型号的重置按键时长，遇到未知型号必须说明资料不足 [K1]。\n\n可参考的相关信息仅适用于 EVAL-SOUND X1：其蓝牙断连排查中，需按住充电盒背面的圆形配对键 7 秒，直到白色指示灯连续闪烁，再重新配对 [K2]。但该 7 秒操作属于 X1 的配对重置流程，不能据此推断 X2 的重置按键时长。",
+          "evidence": [
+            {
+              "evidence_id": "K1",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第二部分：EVAL-SOUND X1 固件与数据边界",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第二部分：EVAL-SOUND X1 固件与数据边界\n只有客户提供 EVAL-SOUND X1 型号且官方应用显示可用固件更新时，才能建议客户在官方应用中更新固件。客服不能要求客户提供密码、验证码或支付信息。知识库没有其他耳机型号的重置按键时长，遇到未知型号必须说明资料不足。"
+            },
+            {
+              "evidence_id": "K2",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第一部分：EVAL-SOUND X1 耳机蓝牙连接排查",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第一部分：EVAL-SOUND X1 耳机蓝牙连接排查\n本合成商户的 EVAL-SOUND X1 耳机若出现间歇性断连，客服应先询问手机型号、系统版本和断连发生场景。确认耳机与充电盒均有电后，请客户在手机蓝牙设置中删除 EVAL-SOUND X1 配对记录，并按住充电盒背面的圆形配对键 7 秒，直到白色指示灯连续闪烁，再重新配对。若仍断连，不应自行承诺换货，应请人工客服核对购买记录和保修资格。"
+            },
+            {
+              "evidence_id": "K3",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第五部分：EVAL-SOUND X1 电脑配对",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第五部分：EVAL-SOUND X1 电脑配对\nEVAL-SOUND X1 与电脑首次配对时，应先在电脑蓝牙列表中搜索 EVAL-SOUND X1。若电脑未找到设备，应先确认电脑蓝牙已开启；该流程不要求客户重置耳机。"
+            },
+            {
+              "evidence_id": "K4",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第八部分：EVAL-SOUND S1 音箱配对",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第八部分：EVAL-SOUND S1 音箱配对\nEVAL-SOUND S1 是音箱，不是 X1 耳机。S1 首次配对时按机身顶部蓝牙键 3 秒；该步骤不得用于 X1 耳机。"
+            },
+            {
+              "evidence_id": "K5",
+              "source": "merchant_eval_agent/handbook.txt",
+              "section": "第六部分：EVAL-SOUND X1 通话麦克风",
+              "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+              "text": "第六部分：EVAL-SOUND X1 通话麦克风\nEVAL-SOUND X1 通话声音较小时，客服可请客户检查手机通话应用的麦克风权限与耳机麦克风开口是否被遮挡。不得据此直接认定硬件损坏。"
+            }
+          ]
+        }
+      ]
+    },
+    "same_customer_direct_read": {
+      "agent": "company_knowledge",
+      "status": "grounded",
+      "answer": "EVAL-SOUND X1 断连时，应按住充电盒背面的圆形配对键 **7 秒**，直到白色指示灯连续闪烁，再重新配对 [K1]。\n\n注意：3 秒是 EVAL-SOUND S1 音箱的配对按键时长，不适用于 X1 耳机 [K2]。",
+      "evidence": [
+        {
+          "evidence_id": "K1",
+          "source": "merchant_eval_agent/handbook.txt",
+          "section": "第一部分：EVAL-SOUND X1 耳机蓝牙连接排查",
+          "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+          "text": "第一部分：EVAL-SOUND X1 耳机蓝牙连接排查\n本合成商户的 EVAL-SOUND X1 耳机若出现间歇性断连，客服应先询问手机型号、系统版本和断连发生场景。确认耳机与充电盒均有电后，请客户在手机蓝牙设置中删除 EVAL-SOUND X1 配对记录，并按住充电盒背面的圆形配对键 7 秒，直到白色指示灯连续闪烁，再重新配对。若仍断连，不应自行承诺换货，应请人工客服核对购买记录和保修资格。"
+        },
+        {
+          "evidence_id": "K2",
+          "source": "merchant_eval_agent/handbook.txt",
+          "section": "第八部分：EVAL-SOUND S1 音箱配对",
+          "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+          "text": "第八部分：EVAL-SOUND S1 音箱配对\nEVAL-SOUND S1 是音箱，不是 X1 耳机。S1 首次配对时按机身顶部蓝牙键 3 秒；该步骤不得用于 X1 耳机。"
+        },
+        {
+          "evidence_id": "K3",
+          "source": "merchant_eval_agent/handbook.txt",
+          "section": "第五部分：EVAL-SOUND X1 电脑配对",
+          "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+          "text": "第五部分：EVAL-SOUND X1 电脑配对\nEVAL-SOUND X1 与电脑首次配对时，应先在电脑蓝牙列表中搜索 EVAL-SOUND X1。若电脑未找到设备，应先确认电脑蓝牙已开启；该流程不要求客户重置耳机。"
+        },
+        {
+          "evidence_id": "K4",
+          "source": "merchant_eval_agent/handbook.txt",
+          "section": "第二部分：EVAL-SOUND X1 固件与数据边界",
+          "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+          "text": "第二部分：EVAL-SOUND X1 固件与数据边界\n只有客户提供 EVAL-SOUND X1 型号且官方应用显示可用固件更新时，才能建议客户在官方应用中更新固件。客服不能要求客户提供密码、验证码或支付信息。知识库没有其他耳机型号的重置按键时长，遇到未知型号必须说明资料不足。"
+        },
+        {
+          "evidence_id": "K5",
+          "source": "merchant_eval_agent/handbook.txt",
+          "section": "第七部分：EVAL-SOUND X1 保修核验",
+          "version": "4a2152f98644b49a980867045dfb8ebd83512138c6d8e274bc4d06457ee47ad1",
+          "text": "第七部分：EVAL-SOUND X1 保修核验\nEVAL-SOUND X1 的换货或保修资格需人工客服核对购买记录和保修期限。Agent 不得在未核验时承诺免费换货。"
+        }
+      ]
+    },
+    "cross_customer_direct_read": {
+      "agent": "company_knowledge",
+      "status": "no_knowledge_scope",
+      "answer": "当前工单身份无法核验，不能查询商家知识库。",
+      "evidence": []
+    },
+    "cross_tenant_direct_read": {
+      "agent": "company_knowledge",
+      "status": "no_knowledge_scope",
+      "answer": "当前工单身份无法核验，不能查询商家知识库。",
+      "evidence": []
+    }
+  }
+}

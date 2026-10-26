@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>客服 Agent · 对话演示</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui,"Microsoft YaHei",sans-serif; color:#16243a; background:#f3f6fb; }
+    * { box-sizing:border-box; }
+    body { margin:0; }
+    header { background:#102543; color:white; padding:16px clamp(18px,5vw,70px); display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    h1 { margin:0; font-size:20px; } h2 { margin:0 0 14px; font-size:17px; }
+    header small { color:#bbd0eb; }
+    .row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; } .row > .grow { flex:1; min-width:0; }
+    button { border:0; border-radius:8px; padding:10px 15px; background:#175fc6; color:white; font:inherit; font-weight:600; cursor:pointer; }
+    button:hover { filter:brightness(.94); } button:disabled { opacity:.5; cursor:default; }
+    button.secondary { background:#e8eef8; color:#18395b; } button.text { background:transparent; color:white; padding:7px; }
+    input,textarea { width:100%; padding:10px 12px; border:1px solid #b9c9dc; border-radius:8px; font:inherit; background:white; color:#16243a; }
+    main { max-width:860px; margin:20px auto; padding:0 16px 60px; }
+    .card { background:#fff; border:1px solid #d9e3f0; border-radius:14px; padding:20px; box-shadow:0 6px 24px #18395b0b; }
+    .notice { padding:12px 14px; border-radius:9px; background:#fff6df; color:#654300; margin-bottom:16px; line-height:1.55; font-size:14px; }
+    .feedback { min-height:22px; color:#175fc6; margin:10px 0; font-size:14px; } .feedback.error { color:#ad3543; }
+    .hidden { display:none !important; }
+
+    #chatBox { display:flex; flex-direction:column; height:min(68vh,640px); }
+    #messages { flex:1; overflow-y:auto; padding:6px 2px 14px; display:flex; flex-direction:column; gap:12px; }
+    .msg { max-width:78%; padding:11px 14px; border-radius:14px; line-height:1.55; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .msg.user { align-self:flex-end; background:#175fc6; color:white; border-bottom-right-radius:4px; }
+    .msg.agent { align-self:flex-start; background:#eef3fb; color:#16243a; border:1px solid #dbe6f3; border-bottom-left-radius:4px; }
+    .msg.error { background:#fdeaea; border-color:#f0c9c9; color:#7d2430; }
+    .msg small { display:block; margin-top:6px; opacity:.72; font-size:12px; }
+    .thinking { align-self:flex-start; width:86%; background:#f7f9fc; border:1px dashed #c7d6ea; border-radius:12px; padding:12px 14px; }
+    .thinking .head { font-size:13px; font-weight:600; color:#607089; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+    .spinner { width:14px; height:14px; border:2px solid #b9c9dc; border-top-color:#175fc6; border-radius:50%; animation:spin 1s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .steps { list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+    .steps li { font-size:14px; color:#33465f; display:flex; gap:8px; align-items:flex-start; }
+    .steps li::before { content:""; width:7px; height:7px; border-radius:50%; background:#8aa3c4; margin-top:7px; flex:none; }
+    .steps li.done::before { background:#1f9d63; }
+    .steps li.fail::before { background:#ad3543; }
+    #composer { border-top:1px solid #e4ebf4; padding-top:12px; display:grid; gap:8px; }
+    #composer .meta { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    #composer .meta input { width:220px; font-size:13px; padding:7px 10px; }
+    #sendRow { display:flex; gap:8px; }
+    #sendRow input { flex:1; }
+    .chip { display:inline-flex; align-items:center; gap:6px; background:#eef3fb; border:1px solid #dbe6f3; border-radius:999px; padding:4px 12px; font-size:13px; color:#33465f; }
+    .chip button { background:none; border:none; color:#175fc6; font:inherit; cursor:pointer; padding:0; }
+    .hint { color:#607089; font-size:12px; }
+    a { color:#175fc6; }
+  </style>
+</head>
+<body>
+<header>
+  <div><h1>客服 Agent · 对话演示</h1><small>意图识别 → 知识检索 → 工具调用 → 人工审核</small></div>
+  <div class="row"><span id="who"></span><button id="logout" class="text hidden">退出</button></div>
+</header>
+<main>
+  <div class="notice">本演示只更新原型数据库中的订单状态，<b>未接入实际支付退款</b>。退款类请求会进入「人工审核」，请用管理员账号在 <a href="/review" target="_blank">审核工作台</a> 完成批准/驳回，再回到本页查看结果。</div>
+
+  <section id="loginBox" class="card" style="max-width:440px;margin:auto">
+    <h2>登录</h2>
+    <form id="loginForm" class="stack" style="display:grid;gap:14px">
+      <div><label for="username" style="font-weight:600;font-size:13px;display:block;margin-bottom:5px">账号</label><input id="username" autocomplete="username" placeholder="演示客户账号 eval_alpha_alice" required></div>
+      <div><label for="password" style="font-weight:600;font-size:13px;display:block;margin-bottom:5px">密码</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <button type="submit">进入对话</button>
+    </form>
+  </section>
+
+  <section id="chatBox" class="card hidden">
+    <div id="messages"></div>
+    <div id="composer">
+      <div class="meta">
+        <input id="orderId" placeholder="关联订单号（可选，退款时填写）">
+        <span class="hint">单次提问 ≤ 100 字</span>
+        <span id="ticketChip" class="chip hidden"></span>
+      </div>
+      <div id="sendRow">
+        <input id="message" maxlength="100" placeholder="例如：我要申请退款，订单号 E3-DEMO-A88BC31B0D76">
+        <button id="send">发送</button>
+      </div>
+    </div>
+  </section>
+  <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let token = '', role = '', tenantId = '', lastTicket = '', busy = false, activeThinking = null;
+
+  const el = (tag, text, className) => {
+    const n = document.createElement(tag);
+    if (text != null) n.textContent = String(text);
+    if (className) n.className = className;
+    return n;
+  };
+  function feedback(message, error = false) { $('feedback').textContent = message; $('feedback').classList.toggle('error', error); }
+
+  async function api(path, options = {}) {
+    const headers = new Headers(options.headers || {});
+    if (token) headers.set('Authorization', `Bearer ${token}`);
+    const response = await fetch(`/api/v1${path}`, {...options, headers});
+    let data; try { data = await response.json(); } catch { data = {}; }
+    if (!response.ok) {
+      const detail = typeof data.detail === 'string' ? data.detail : `HTTP ${response.status}`;
+      const err = new Error(detail); err.status = response.status; throw err;
+    }
+    return data;
+  }
+
+  function addBubble(kind, text, extra) {
+    const node = el('div', text, `msg ${kind}`);
+    if (extra) node.append(el('small', extra));
+    $('messages').append(node);
+    $('messages').scrollTop = $('messages').scrollHeight;
+    return node;
+  }
+  function startThinking() {
+    const node = el('div', null, 'thinking');
+    const head = el('div', null, 'head');
+    head.append(el('span', null, 'spinner'), el('span', '客服 Agent 处理中…'));
+    const steps = el('ul', null, 'steps');
+    node.append(head, steps);
+    $('messages').append(node);
+    $('messages').scrollTop = $('messages').scrollHeight;
+    activeThinking = { node, steps };
+  }
+  function addStep(message, state = '') {
+    if (!activeThinking) return;
+    const li = el('li', message, state);
+    activeThinking.steps.append(li);
+    $('messages').scrollTop = $('messages').scrollHeight;
+  }
+  function finishThinking() {
+    if (activeThinking) { activeThinking.node.remove(); activeThinking = null; }
+  }
+
+  async function streamTask(taskId, onStep, onDone) {
+    const response = await fetch(`/api/v1/task/${taskId}/events`, {
+      headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'text/event-stream' }
+    });
+    if (!response.ok || !response.body) throw new Error(`进度连接失败（HTTP ${response.status}）`);
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const parts = buffer.split('\n\n');
+      buffer = parts.pop();
+      for (const part of parts) {
+        let event = 'message', data = '';
+        for (const line of part.split('\n')) {
+          if (line.startsWith('event:')) event = line.slice(6).trim();
+          else if (line.startsWith('data:')) data += line.slice(5).trim();
+        }
+        if (!data) continue;
+        let payload; try { payload = JSON.parse(data); } catch { continue; }
+        if (event === 'completed' || payload.status === 'completed' || payload.status === 'degraded') { onDone(payload); return; }
+        if (event === 'failed' || payload.status === 'failed') { onDone(payload); return; }
+        onStep(payload);
+      }
+    }
+  }
+
+  async function send() {
+    const topic = $('message').value.trim();
+    const orderId = $('orderId').value.trim();
+    if (busy || !topic) return;
+    busy = true; $('send').disabled = true; feedback('');
+    const orderTag = orderId ? `（订单 ${orderId}）` : '';
+    addBubble('user', topic, orderTag || '');
+    $('message').value = '';
+    startThinking();
+    try {
+      const res = await api('/submit', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, order_id: orderId })
+      });
+      lastTicket = res.ticket_id;
+      if (lastTicket) {
+        $('ticketChip').classList.remove('hidden');
+        $('ticketChip').innerHTML = '';
+        $('ticketChip').append(el('span', `工单 #${lastTicket}`));
+        const btn = el('button', '查审核进度');
+        btn.addEventListener('click', () => lookupReview(lastTicket));
+        $('ticketChip').append(btn);
+      }
+      await streamTask(res.task_id,
+        (payload) => addStep(payload.message || payload.status || '处理中'),
+        (payload) => {
+          finishThinking();
+          if (payload.status === 'failed') addBubble('error', payload.message || payload.result || '处理失败');
+          else addBubble('agent', payload.result || payload.message || '处理完成');
+        }
+      );
+    } catch (error) {
+      finishThinking();
+      addBubble('error', error.message);
+      feedback(error.message, true);
+    } finally {
+      busy = false; $('send').disabled = false;
+    }
+  }
+
+  async function lookupReview(ticketId) {
+    try {
+      const data = await api(`/tickets/${encodeURIComponent(ticketId)}/review`);
+      addBubble('agent', `${data.message}`, `工单 ${data.ticket_id} · 审核状态 ${data.review_status}`);
+    } catch (error) {
+      if (error.status === 404) addBubble('agent', '该工单还没有退款审核（普通咨询不进入人工审核）。');
+      else { feedback(error.message, true); addBubble('error', error.message); }
+    }
+  }
+
+  $('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    try {
+      const body = new URLSearchParams({ username: $('username').value.trim(), password: $('password').value });
+      const response = await fetch('/api/v1/auth/login', { method: 'POST', body });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || `HTTP ${response.status}`);
+      token = data.access_token; role = data.role; tenantId = data.tenant_id;
+      $('password').value = '';
+      $('who').textContent = `${$('username').value.trim()} · ${data.tenant_id} · ${data.role}`;
+      $('loginBox').classList.add('hidden'); $('logout').classList.remove('hidden');
+      $('chatBox').classList.remove('hidden');
+      feedback('登录成功，开始对话吧。');
+    } catch (error) { feedback(error.message, true); }
+  });
+  $('logout').addEventListener('click', () => {
+    token = ''; role = ''; tenantId = ''; lastTicket = ''; busy = false; finishThinking();
+    $('who').textContent = ''; $('loginBox').classList.remove('hidden');
+    $('chatBox').classList.add('hidden'); $('logout').classList.add('hidden');
+    $('ticketChip').classList.add('hidden');
+    $('messages').innerHTML = '';
+    feedback('已退出。');
+  });
+  $('send').addEventListener('click', send);
+  $('message').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
+})();
+</script>
+</body>
+</html>

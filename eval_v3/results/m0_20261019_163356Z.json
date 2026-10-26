@@ -1,0 +1,60 @@
+{
+  "dataset_version": "3.2.0",
+  "run_at_utc": "2026-10-19T16:33:56.236420+00:00",
+  "scope": "M0 API and tool tenant boundaries only; Celery and LLM stubbed",
+  "evaluation_type": "boundary_regression",
+  "declared_case_count": 12,
+  "supplemental_check_count": 0,
+  "total": 12,
+  "passed": 12,
+  "results": [
+    {
+      "case_id": "M0-API-OWN-ORDER",
+      "passed": true
+    },
+    {
+      "case_id": "M0-API-OTHER-CUSTOMER",
+      "passed": true
+    },
+    {
+      "case_id": "M0-API-OTHER-TENANT",
+      "passed": true
+    },
+    {
+      "case_id": "M0-API-OTHER-TENANT-REVERSE",
+      "passed": true
+    },
+    {
+      "case_id": "M0-API-FORGED-CUSTOMER-FIELD",
+      "passed": true
+    },
+    {
+      "case_id": "M0-AUTH-INACTIVE",
+      "passed": true
+    },
+    {
+      "case_id": "M0-TASK-CROSS-TENANT",
+      "passed": true
+    },
+    {
+      "case_id": "M0-TASK-OTHER-CUSTOMER",
+      "passed": true
+    },
+    {
+      "case_id": "M0-TOOL-OWN-ORDER",
+      "passed": true
+    },
+    {
+      "case_id": "M0-TOOL-OTHER-CUSTOMER",
+      "passed": true
+    },
+    {
+      "case_id": "M0-TOOL-OTHER-TENANT",
+      "passed": true
+    },
+    {
+      "case_id": "M0-TOOL-MISSING-IDENTITY",
+      "passed": true
+    }
+  ]
+}

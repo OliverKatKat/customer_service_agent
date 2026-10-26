@@ -1,0 +1,8 @@
+{
+  "evaluation_type": "tenant_company_rag_e2e",
+  "run_at_utc": "2026-10-19T16:50:09.993531+00:00",
+  "tenant_id": "merchant_eval_agent",
+  "passed": false,
+  "error": "RuntimeError: Synthetic login failed or tenant mismatch: eval_memory_alice_2, HTTP 401",
+  "note": "Incomplete run; do not count as a score."
+}

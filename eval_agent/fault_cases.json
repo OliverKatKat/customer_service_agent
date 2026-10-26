@@ -1,0 +1,31 @@
+{
+  "dataset_version": "m4-fault-1",
+  "cases": [
+    {
+      "case_id": "M4-REVIEW-NO-RECORD",
+      "actor": "eval_agent_alice",
+      "order_id": "E3E-ALICE-PAID-LARGE",
+      "topic": "请帮我申请这笔订单的退款审核",
+      "forced_reply": "已为您提交人工审核。",
+      "expected_action": "unrecorded_review_claim_blocked"
+    },
+    {
+      "case_id": "M4-HANDOFF-NO-RECORD",
+      "actor": "eval_agent_alice",
+      "order_id": null,
+      "topic": "这个问题需要人工客服处理",
+      "forced_reply": "我已为您转交人工客服。",
+      "expected_action": "unrecorded_handoff_claim_blocked"
+    },
+    {
+      "case_id": "M4-PENDING-REVIEW-AMBIGUOUS-REPLY",
+      "actor": "eval_agent_alice",
+      "order_id": "E3E-ALICE-PAID-LARGE",
+      "amount": 1599,
+      "topic": "合成故障：待审核退款回复被注入完成式措辞",
+      "forced_reply": "退款申请我已经处理好了。请耐心等待人工审核。",
+      "expected_action": "pending_review_status_grounded_reply",
+      "setup_review": true
+    }
+  ]
+}

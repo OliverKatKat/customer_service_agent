@@ -1,0 +1,74 @@
+{
+  "dataset_version": "3.0.0",
+  "milestone": "M1",
+  "generated_at_utc": "2026-10-05T15:00:10.457692+00:00",
+  "environment": "isolated eval v3",
+  "seeded_fixture_facts": 3,
+  "cases": [
+    {
+      "case_id": "M1-MEMORY-SAME-CUSTOMER-CROSS-TICKET",
+      "passed": true,
+      "status": "found",
+      "returned_count": 1,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-OTHER-CUSTOMER",
+      "passed": true,
+      "status": "found",
+      "returned_count": 1,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-OTHER-TENANT",
+      "passed": true,
+      "status": "found",
+      "returned_count": 1,
+      "checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-MEMORY-MISSING-IDENTITY",
+      "passed": true,
+      "status": "no_memory_scope",
+      "returned_count": 0,
+      "checks": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "case_id": "M1-LOCAL-EXTRACTION-AND-WRITE",
+      "passed": true,
+      "stored": 2,
+      "fact_count": 2
+    },
+    {
+      "case_id": "M1-LEGACY-UNSCOPED-QUARANTINE",
+      "passed": true
+    },
+    {
+      "case_id": "M1-SOURCE-TICKET-OWNERSHIP",
+      "passed": true
+    },
+    {
+      "case_id": "M1-WRITE-WRONG-CUSTOMER",
+      "passed": true
+    }
+  ],
+  "passed": 8,
+  "total": 8
+}

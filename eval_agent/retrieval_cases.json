@@ -1,0 +1,22 @@
+{
+  "dataset_version": "retrieval-1.0",
+  "tenant_id": "merchant_eval_agent",
+  "note": "Synthetic labeled queries. expected_paragraph_index uses zero-based handbook paragraph numbering.",
+  "cases": [
+    {"id": "x1-pair-exact", "query": "EVAL-SOUND X1 断连后配对键按几秒？", "expected_paragraph_index": 0},
+    {"id": "x1-pair-paraphrase", "query": "蓝牙耳机老是掉线，怎样重新连接手机？", "expected_paragraph_index": 0},
+    {"id": "x1-pair-led", "query": "X1 重新配对时白灯应该怎么闪？", "expected_paragraph_index": 0},
+    {"id": "firmware-exact", "query": "X1 固件更新要满足什么条件？", "expected_paragraph_index": 1},
+    {"id": "unknown-model", "query": "X2 重置按键时长有没有官方资料？", "expected_paragraph_index": 1},
+    {"id": "privacy", "query": "客服可以要求我提供短信验证码吗？", "expected_paragraph_index": 9},
+    {"id": "channel", "query": "你们能主动给客户发邮件回访吗？", "expected_paragraph_index": 2},
+    {"id": "preference", "query": "记录联系偏好是否意味着安排了后续联系？", "expected_paragraph_index": 2},
+    {"id": "charge-led", "query": "X1 充电盒绿灯代表什么？", "expected_paragraph_index": 3},
+    {"id": "computer", "query": "电脑搜不到 X1 耳机应该先检查哪里？", "expected_paragraph_index": 4},
+    {"id": "microphone", "query": "X1 通话声音小需要检查麦克风什么？", "expected_paragraph_index": 5},
+    {"id": "warranty", "query": "X1 可以不核对订单直接承诺免费换货吗？", "expected_paragraph_index": 6},
+    {"id": "s1-pair", "query": "S1 音箱蓝牙键按几秒进入配对？", "expected_paragraph_index": 7},
+    {"id": "r1-wan", "query": "R1 路由器断网先检查哪根网线？", "expected_paragraph_index": 8},
+    {"id": "model-confusion", "query": "S1 的三秒蓝牙按键能用在 X1 耳机上吗？", "expected_paragraph_index": 7}
+  ]
+}

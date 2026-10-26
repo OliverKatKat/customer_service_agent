@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" role="img" aria-labelledby="title desc">
+<title id="title">Agent 处理链路</title>
+<desc id="desc">经过该阶段的运行数；阶段可重叠；提交工单 60 次，意图识别 48 次，上下文网关 45 次，Planner 决策 45 次，Executor 工具执行 42 次</desc>
+<rect width="700" height="380" fill="#ffffff"/>
+<text x="24" y="35" fill="#111827" font-size="20" font-weight="600">Agent 处理链路</text>
+<text x="24" y="60" fill="#64748b" font-size="13">经过该阶段的运行数；阶段可重叠</text>
+<text x="24" y="112" fill="#334155" font-size="15">提交工单</text>
+<rect x="205" y="95" width="365" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="205" y="95" width="365.00" height="24" rx="4" fill="#2563eb"/>
+<text x="610" y="113" fill="#111827" font-size="15" text-anchor="end">60</text>
+<text x="24" y="160" fill="#334155" font-size="15">意图识别</text>
+<rect x="205" y="143" width="365" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="205" y="143" width="292.00" height="24" rx="4" fill="#2563eb"/>
+<text x="610" y="161" fill="#111827" font-size="15" text-anchor="end">48</text>
+<text x="24" y="208" fill="#334155" font-size="15">上下文网关</text>
+<rect x="205" y="191" width="365" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="205" y="191" width="273.75" height="24" rx="4" fill="#2563eb"/>
+<text x="610" y="209" fill="#111827" font-size="15" text-anchor="end">45</text>
+<text x="24" y="256" fill="#334155" font-size="15">Planner 决策</text>
+<rect x="205" y="239" width="365" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="205" y="239" width="273.75" height="24" rx="4" fill="#2563eb"/>
+<text x="610" y="257" fill="#111827" font-size="15" text-anchor="end">45</text>
+<text x="24" y="304" fill="#334155" font-size="15">Executor 工具执行</text>
+<rect x="205" y="287" width="365" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="205" y="287" width="255.50" height="24" rx="4" fill="#2563eb"/>
+<text x="610" y="305" fill="#111827" font-size="15" text-anchor="end">42</text>
+</svg>

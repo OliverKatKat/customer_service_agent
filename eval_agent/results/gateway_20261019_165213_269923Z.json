@@ -1,0 +1,44 @@
+{
+  "evaluation_type": "memory_gateway_long_context",
+  "run_at_utc": "2026-10-19T16:52:13.269274+00:00",
+  "scope": "Model-free synthetic messages; Celery memory task replaced with a recorder; no DB writes",
+  "checks": {
+    "short_context_unchanged": true,
+    "identity_mismatch_blocks_planner": true,
+    "old_turn_removed_atomically": true,
+    "preference_enqueue_scoped": true,
+    "enqueue_failure_keeps_history": true,
+    "incomplete_tool_pair_removed": true,
+    "oversized_current_turn_blocks_planner": true
+  },
+  "passed": 7,
+  "total": 7,
+  "evidence": {
+    "mismatch": {
+      "blocked": true,
+      "message_count": 1
+    },
+    "compaction": {
+      "removed_ids": [
+        "old-ai",
+        "old-human"
+      ],
+      "enqueue_count": 1
+    },
+    "enqueue_failure": {
+      "blocked": true,
+      "reason": "memory_archive_enqueue_failed",
+      "removed_ids": []
+    },
+    "incomplete_tool_pair": {
+      "removed_ids": [
+        "tool-ai",
+        "tool-result-one"
+      ]
+    },
+    "oversized_current_turn": {
+      "blocked": true,
+      "message_count": 1
+    }
+  }
+}

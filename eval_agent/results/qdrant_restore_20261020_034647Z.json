@@ -1,0 +1,10 @@
+{
+  "run_at_utc": "2026-10-20T03:46:46.098326+00:00",
+  "source_collection": "company_knowledge_eval_v3__merchant_eval_agent",
+  "snapshot_name": "company_knowledge_eval_v3__merchant_eval_agent-2440021027489301-2026-10-20-03-30-56.snapshot",
+  "probe_collection": "jd_restore_probe_20261020",
+  "passed": true,
+  "source_points_at_check": 10,
+  "restored_points": 10,
+  "probe_removed": true
+}

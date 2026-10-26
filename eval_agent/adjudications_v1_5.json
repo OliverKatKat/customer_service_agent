@@ -1,0 +1,12 @@
+{
+  "dataset_version": "1.5.0",
+  "adjudications": [
+    {
+      "report": "agent_20261008_154510_936201Z.json",
+      "case_id": "E2E-ALREADY-REFUNDED",
+      "ticket_id": 930458,
+      "decision": "evaluator_false_positive",
+      "reason": "回复中的‘该订单已经完成退款’描述原有 refunded 状态，随后明确拒绝重复申请，并未声称本次再次退款成功。"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M4 Agent 评估看板 · v1.5.0</title>
+  <style>
+    :root { font-family: "Microsoft YaHei", "Segoe UI", sans-serif; color: #111827; background: #f4f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(1100px, calc(100% - 32px)); margin: 36px auto 64px; }
+    h1 { font-size: clamp(24px, 3vw, 34px); margin: 0 0 8px; }
+    h2 { font-size: 19px; margin: 0 0 14px; }
+    p { line-height: 1.65; }
+    .muted { color: #64748b; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 25px 0; }
+    .metric, .panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 3px 16px rgba(15,23,42,.04); }
+    .metric { padding: 18px; }
+    .metric small { display: block; color: #64748b; font-size: 13px; }
+    .metric strong { display: block; font-size: 28px; margin-top: 5px; font-variant-numeric: tabular-nums; }
+    .metric em { display: block; color: #64748b; font-size: 12px; font-style: normal; margin-top: 4px; }
+    .charts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 800px; }
+    .panel { padding: 20px; min-width: 0; }
+    .panel img { display: block; width: 100%; height: auto; }
+    .note { border-left: 4px solid #f59e0b; padding: 9px 14px; margin: 18px 0; background: #fffbeb; }
+    .sources { font-size: 13px; color: #475569; margin-top: 20px; }
+    a { color: #1d4ed8; }
+    @media (max-width: 850px) { .charts { grid-template-columns: 1fr; } .metrics { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 440px) { .metrics { grid-template-columns: 1fr 1fr; } .metric { padding: 12px; } .metric strong { font-size: 22px; } }
+    @media print { :root { background: #fff; } main { width: 100%; margin: 0; } .panel, .metric { box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>M4 Agent 评估看板</h1>
+    <p class="muted">v1.5.0 · 隔离环境合成数据 · 基于 2026-10-08 23:55 的冻结报告</p>
+    <div class="metrics">
+      <div class="metric"><small>合成案例</small><strong>20 × 3</strong><em>共 60 次运行</em></div>
+      <div class="metric"><small>意图识别</small><strong>48</strong><em>3 次分类后拦截</em></div>
+      <div class="metric"><small>Planner</small><strong>45</strong><em>通过意图检查后进入</em></div>
+      <div class="metric"><small>Executor</small><strong>42</strong><em>实际进入工具节点</em></div>
+    </div>
+    <div class="charts">
+      <section class="panel" aria-label="Agent 阶段覆盖柱状图"><img src="figures/m4-stage-coverage.svg" alt="60 次提交；48 次经过意图识别，45 次经过上下文网关与 Planner，42 次进入 Executor"></section>
+      <section class="panel" aria-label="能力调用柱状图"><img src="figures/m4-capability-coverage.svg" alt="订单核验工具调用 42 次，退款申请工具 21 次，公司知识 RAG 和客户记忆检索本轮均为 0 次"></section>
+    </div>
+    <p class="note"><strong>RAG 的口径：</strong>“上下文网关”负责上下文整理，不等于访问向量数据库。本轮没有调用公司知识 RAG 或客户记忆检索工具；需要另外设计知识问答与跨工单偏好样例才能评估检索质量。</p>
+    <p class="muted">自动评分 59/60，唯一未通过项是历史退款状态的词面误判。意图识别使用模型分类；检查点中的 108 次模型调用与 252,319 token 只统计图内 Planner 消息，不含意图分类器。6 次待付款取消回复由固定模板改写。</p>
+    <p class="sources">依据：<a href="../eval_agent/results/stage_coverage_v1_5_20261008_161034_216481Z.json">阶段覆盖证据</a> · <a href="../eval_agent/results/agent_summary_v1_5_20261008_155531_185195Z.json">自动评分总表</a> · <a href="m4-eval-analysis-20261008.md">分析与限制</a> · <a href="figures/m4-case-results.svg">逐案例附图</a></p>
+  </main>
+</body>
+</html>
