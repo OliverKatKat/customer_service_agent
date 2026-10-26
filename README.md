@@ -10,6 +10,7 @@
 [![Celery](https://img.shields.io/badge/Celery-37814A?logo=celery&logoColor=white)](#)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)](#)
 [![Qdrant](https://img.shields.io/badge/Qdrant-DC244C?logo=qdrant&logoColor=white)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
@@ -178,3 +179,9 @@ docker compose --env-file infra/eval-v3/.env -f infra/eval-v3/compose.yaml -p ag
 ## 📝 说明
 
 - 本系统为个人学习展示用途，**未接入真实支付网关**；`refunded` 只是原型数据库的状态。
+
+---
+
+## 📄 许可证
+
+[MIT](LICENSE) © 2026 OliverKatKat
