@@ -131,8 +131,10 @@ sequenceDiagram
 - **端到端自动评分**（`eval_agent/`）：**59/60**
 - **审核违规率**：**2/21 → 0/21**（Bad Case 分析定位"未审先判"幻觉，硬性兜底策略修复）
 - **LLM-as-a-Judge 语义复核**（`eval_agent/judge.py`）：16 条含回复案例中，规则护栏全部通过；校准后的 Judge 额外识别出 **6 条**规则漏判的语义问题（Agent 向客户泄漏"我没有 XX 工具"等内部能力）。判据经人工校准，完整判定见 `eval_agent/results/judge_*.json`
+- **检索评测基线**（`eval_agent/benchmark_retrieval.py`）：15 条合成标注查询，hybrid（BM25 + dense）基线 **hit@1 0.93 / recall@3 1.00 / MRR@3 0.97**，报告 `eval_agent/results/retrieval_*.json`
+- **RAG 质量评估**（`eval_external/ragas_eval.py`）：RAGAS 0.2.15 对 **30 条合成问答**评分，faithfulness / answer_relevancy / context_precision 均值 **0.94 / 0.75 / 0.96**（剔除判官超时后有效样本 **22 / 30 / 23**），报告 `eval_external/results/ragas_*.json`
 
-不同评估范围与版本的分数不直接相加；详情见 `eval_v3/`、`eval_agent/` 与 `docs/`。
+> 所有评估用例与知识库均为**合成数据**（虚构商户 EVAL）；不同评估范围与版本的分数不直接相加。详情见 `eval_v3/`、`eval_agent/`、`eval_external/` 与 `docs/`。
 
 ---
 
@@ -149,6 +151,7 @@ app/
 migrations/    # Alembic 迁移
 eval_v3/       # M0–M3 隔离边界回归
 eval_agent/    # 端到端 Agent、故障、知识库与记忆评估
+eval_external/ # RAGAS 评测脚本、问题集与结果
 infra/         # Docker Compose（PostgreSQL / Redis / Qdrant）
 docs/          # 架构、评估分析、故障排查记录
 ```

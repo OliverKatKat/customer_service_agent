@@ -1,0 +1,350 @@
+{
+  "dataset_version": "ragas-1.0",
+  "tenant_id": "merchant_eval_agent",
+  "run_at_utc": "2026-10-26T11:28:08.372999+00:00",
+  "metric_names": [
+    "faithfulness",
+    "answer_relevancy",
+    "llm_context_precision_without_reference"
+  ],
+  "judge_model": "qwen3.7-plus",
+  "usable_count": 30,
+  "skipped_ids": [],
+  "summary": {
+    "faithfulness": 0.9402,
+    "answer_relevancy": 0.7511,
+    "llm_context_precision_without_reference": 0.9565
+  },
+  "per_sample": [
+    {
+      "id": "q01",
+      "question": "X1 耳机老是断连，怎么重新配对？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.895,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q02",
+      "question": "X1 配对要按充电盒哪个键、按几秒？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8102,
+        "llm_context_precision_without_reference": 0.3333
+      }
+    },
+    {
+      "id": "q03",
+      "question": "X1 重新配对时白色指示灯应该怎么闪？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.9271,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q04",
+      "question": "X1 固件什么时候可以更新？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 0.9091,
+        "answer_relevancy": 0.0,
+        "llm_context_precision_without_reference": null
+      }
+    },
+    {
+      "id": "q05",
+      "question": "更新 X1 固件需要我提供短信验证码吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9909,
+        "llm_context_precision_without_reference": 0.8333
+      }
+    },
+    {
+      "id": "q06",
+      "question": "X2 耳机的重置按键时长是多少？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.0,
+        "llm_context_precision_without_reference": null
+      }
+    },
+    {
+      "id": "q07",
+      "question": "你们能主动打电话给我回访吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7033,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q08",
+      "question": "我登记了邮箱偏好，是不是就会收到你们的邮件？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8898,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q09",
+      "question": "售后除了站内客服，还能通过别的方式联系我吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7146,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q10",
+      "question": "X1 充电盒亮琥珀色灯是什么意思？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9815,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q11",
+      "question": "X1 充电盒绿灯代表什么状态？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9765,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q12",
+      "question": "耳机断连是不是说明电池坏了？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.8115,
+        "llm_context_precision_without_reference": null
+      }
+    },
+    {
+      "id": "q13",
+      "question": "电脑连不上 X1 耳机，第一步要做什么？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8382,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q14",
+      "question": "电脑搜不到 X1 需要重置耳机吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.8682,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q15",
+      "question": "X1 和电脑配对要检查电脑的什么开关？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.757,
+        "llm_context_precision_without_reference": null
+      }
+    },
+    {
+      "id": "q16",
+      "question": "X1 通话声音小怎么排查？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9086,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q17",
+      "question": "X1 麦克风没声音是硬件坏了吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.0,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q18",
+      "question": "X1 通话声音小要检查手机哪个权限？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.8145,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q19",
+      "question": "X1 可以直接免费换货吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6662,
+        "llm_context_precision_without_reference": null
+      }
+    },
+    {
+      "id": "q20",
+      "question": "X1 换货需要核对什么？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9079,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q21",
+      "question": "X1 保修资格由谁来判断？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7603,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q22",
+      "question": "S1 音箱怎么进入配对模式？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.991,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q23",
+      "question": "S1 的 3 秒按键能用在 X1 耳机上吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.0,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q24",
+      "question": "S1 配对键在机身的什么位置？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9359,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q25",
+      "question": "R1 路由器断网先检查什么？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.9576,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q26",
+      "question": "R1 的排查步骤能用于耳机吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.8061,
+        "llm_context_precision_without_reference": null
+      }
+    },
+    {
+      "id": "q27",
+      "question": "R1 断网要检查哪根线？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": null,
+        "answer_relevancy": 0.8927,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q28",
+      "question": "客服可以索要我的短信验证码吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9675,
+        "llm_context_precision_without_reference": 1.0
+      }
+    },
+    {
+      "id": "q29",
+      "question": "核验订单需要我提供支付卡号吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9643,
+        "llm_context_precision_without_reference": 0.8333
+      }
+    },
+    {
+      "id": "q30",
+      "question": "客服能查看我的账号密码吗？",
+      "status": "grounded",
+      "retrieved_context_count": 5,
+      "scores": {
+        "faithfulness": 0.875,
+        "answer_relevancy": 0.7953,
+        "llm_context_precision_without_reference": null
+      }
+    }
+  ]
+}

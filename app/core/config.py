@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     # 🆕 新增：只读数据库 URL，默认可回退到主库方便本地测试
     READONLY_DATABASE_URL: str = ""
     
-    SECRET_KEY: str = "SUPER_SECRET_KEY_DO_NOT_SHARE" # 建议也在 .env 中配置
+    SECRET_KEY: str = Field(..., description="必须从 .env 注入，禁止硬编码默认值")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     
     # 🚨 新增：安全与权限配置
     ADMIN_USERNAME: str = "admin"            # 默认后台管理员账号
-    ADMIN_PASSWORD: str = "secure_password"  # 默认后台管理员密码
+    ADMIN_PASSWORD: str = Field(..., description="必须从 .env 注入，禁止硬编码默认值")
     ADMIN_APPROVAL_CODE: str = Field(...)
 
     # ⚖️ 新增：裁判模型配置

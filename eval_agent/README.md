@@ -6,7 +6,7 @@ cases.json 与 fixtures.json 定义 20 条 v1.5.0 合成商户案例。先按 ..
 
 这里保留了 2026-10-19 的三轮原始报告、汇总和关键专项证据。该轮 60 次自动评分为 59/60；其中一条已退款案例未通过自动检查。2026-10-08 的人工判读结果属于另一轮评估，不应与本轮混用。评估口径和限制见 ../docs/m4-eval-analysis-20261008.md 及 ../docs/m4-reply-consistency-optimization-20261018.md。
 
-检索对照评估：`python eval_agent/benchmark_retrieval.py` 先预览数据集；完成合成手册重新索引后，通过隔离环境包装器运行 `python eval_agent/benchmark_retrieval.py --run --allow-external-embedding`。报告保存在 `results/retrieval_*.json`。标注集目前只有一个合成租户和 15 个问题，结果只用于方案对照，不代表线上质量。
+检索对照评估：`python eval_agent/benchmark_retrieval.py` 先预览数据集；完成合成手册重新索引后，通过隔离环境包装器运行 `python eval_agent/benchmark_retrieval.py --run --allow-external-embedding`。报告保存在 `results/retrieval_*.json`。标注集目前只有一个合成租户和 15 个问题，结果只用于方案对照，不代表线上质量。基线结果与口径见 `../docs/rpd-retrieval-baseline-20261026.md`。
 
 偏好生命周期评估：`python eval_agent/run_memory_lifecycle.py --run-number 43` 预览；在隔离环境中加 `--apply --allow-external-llm` 后验证覆盖、撤回和旧任务重放，使用新的 run number 避免重复合成客户。快照恢复探针见 `verify_qdrant_restore.py`，只接受本机隔离 Qdrant，执行后删除临时集合。
 
