@@ -1,8 +1,8 @@
-# 售后客服 Agent · After-sales Support Agent
+# After-sales Support Agent
 
-一个面向**售后退款与知识咨询**的 LLM Agent，核心能力是 **人工审核、状态恢复、安全边界与可评估**。基于 LangGraph 编排，FastAPI + Celery + PostgreSQL + Redis + Qdrant 落地。
+An LLM agent for **after-sales refunds and knowledge-based support**, with first-class support for **human review, state recovery, safety boundaries, and evaluability**. Orchestrated with LangGraph and built on FastAPI + Celery + PostgreSQL + Redis + Qdrant.
 
-> ⚠️ 学习/演示用途：只更新原型数据库，未接入真实支付网关。
+> ⚠️ Learning/demo use only: it updates a prototype database and is **not connected to a real payment gateway**.
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](#)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](#)
@@ -14,177 +14,177 @@
 
 ---
 
-## ✨ 核心能力
+## ✨ Core Capabilities
 
-| 能力 | 说明 |
+| Capability | Description |
 |---|---|
-| 🧭 **Agent 编排与状态管理** | LangGraph 意图网关 + 记忆网关 + Planner/Executor；工单级 Checkpoint 持久化到 Postgres，支持中断恢复与失败补偿 |
-| 🛡️ **人工审核与安全边界** | 退款工具复核租户/客户/工单/订单/金额归属；RBAC + 二次审批凭据 + 版本号防重放；批准前拦截缺少持久记录的承诺 |
-| 📚 **知识与客户记忆** | 租户专属手册 + Qdrant 向量库；BM25 与向量**混合检索**并校验证据编号，检索命中可量化（hit@1 / recall@3 / MRR@3）；跨工单客户偏好记忆 |
-| 📐 **测评与闭环迭代** | 规则护栏 + 状态断言 + LLM-as-a-Judge 语义复核；隔离回归 **59/60**、违规率 **2/21 → 0/21**；RAGAS 三指标 + 检索基线评测 |
+| 🧭 **Agent orchestration & state management** | LangGraph intent gateway + memory gateway + Planner/Executor; ticket-level checkpoints persisted to Postgres, with interrupt recovery and failure compensation |
+| 🛡️ **Human review & safety boundaries** | Refund tools re-verify tenant/customer/ticket/order/amount ownership; RBAC + second-approval credential + version-based replay protection; blocks commitments that lack a persistent record before approval |
+| 📚 **Knowledge & customer memory** | Tenant-specific handbook + Qdrant vector store; BM25 + vector **hybrid retrieval** with evidence-ID validation; measurable retrieval (hit@1 / recall@3 / MRR@3); cross-ticket customer preference memory |
+| 📐 **Evaluation & closed-loop iteration** | Rule guards + state assertions + LLM-as-a-Judge semantic review; isolation regression **59/60**, violation rate **2/21 → 0/21**; RAGAS metrics + retrieval baselines |
 
 ---
 
-## 🏗️ 架构
+## 🏗️ Architecture
 
-### Agent 编排（LangGraph 状态图）
+### Agent orchestration (LangGraph state graph)
 
 ```mermaid
 flowchart TD
-    START((START)) --> IG["intent_guard<br/>意图与安全网关"]
-    IG -->|"SAFE / 授权上下文"| MG["memory_gateway<br/>会话上下文核验与整理"]
-    IG -->|"MALICIOUS / 异常"| E1((END))
-    MG -->|"放行"| PL["planner<br/>技能选择 + 规划"]
-    MG -->|"拦截"| E2((END))
-    PL -->|"需要调用工具"| TOOLS["tools (executor)<br/>知识库 · 记忆 · 退款工具"]
-    PL -->|"无需工具 / 完成"| E3((END))
+    START((START)) --> IG["intent_guard<br/>Intent & safety gateway"]
+    IG -->|"SAFE / authorized context"| MG["memory_gateway<br/>Session context verification & preparation"]
+    IG -->|"MALICIOUS / anomaly"| E1((END))
+    MG -->|"allow"| PL["planner<br/>Skill selection + planning"]
+    MG -->|"block"| E2((END))
+    PL -->|"tool call needed"| TOOLS["tools (executor)<br/>knowledge · memory · refund tools"]
+    PL -->|"no tool needed / done"| E3((END))
     TOOLS --> PL
 ```
 
-### 退款审核全链路
+### Refund review end-to-end flow
 
 ```mermaid
 sequenceDiagram
-    participant C as 客户
-    participant UI as 聊天页 /chat
+    participant C as Customer
+    participant UI as Chat page /chat
     participant API as FastAPI
     participant W as Celery Worker
     participant A as LangGraph Agent
     participant DB as PostgreSQL
     participant Q as Qdrant
-    participant AD as 管理员
-    participant RB as 审核工作台 /review
+    participant AD as Admin
+    participant RB as Review workspace /review
 
-    C->>UI: 提交退款（含订单号）
+    C->>UI: Submit refund (with order number)
     UI->>API: POST /submit
-    API->>DB: 建档工单 (pending)
-    API->>W: 派发 process_agent_task
-    API-->>UI: SSE 流式进度
-    W->>A: ainvoke（意图→记忆→规划→工具）
-    A->>Q: 知识/记忆检索（BM25 + 向量）
-    A->>DB: 退款工具核验订单归属与资格
-    A->>DB: 写入 review_request(pending) + 审计 + outbox
-    A-->>UI: "已提交人工审核"
-    AD->>RB: 登录查看待审核队列
-    AD->>RB: 批准（二次审批凭据 + 版本）
+    API->>DB: Create ticket (pending)
+    API->>W: Dispatch process_agent_task
+    API-->>UI: SSE streaming progress
+    W->>A: ainvoke (intent → memory → plan → tools)
+    A->>Q: Knowledge/memory retrieval (BM25 + vector)
+    A->>DB: Refund tools verify order ownership & eligibility
+    A->>DB: Write review_request(pending) + audit + outbox
+    A-->>UI: "Submitted for human review"
+    AD->>RB: Log in and view pending review queue
+    AD->>RB: Approve (second-approval credential + version)
     RB->>DB: review → approved + outbox
-    W->>DB: 重新核验后执行退款
-    DB->>DB: 订单 → refunded / 工单 → resolved
-    UI-->>C: 查询审核进度 → 已退款
+    W->>DB: Re-verify then execute refund
+    DB->>DB: order → refunded / ticket → resolved
+    UI-->>C: Check review progress → refunded
 ```
 
 ---
 
-## 🧰 技术栈
+## 🧰 Tech Stack
 
-- **编排**：LangGraph + LangGraph Checkpoint（Postgres）
-- **服务**：FastAPI + Uvicorn
-- **异步任务**：Celery（Redis broker/backend）+ 分布式熔断器 + Tenacity 重试
-- **存储**：PostgreSQL（SQLAlchemy + Alembic）/ Redis / Qdrant
-- **模型**：DeepSeek（LLM）+ 阿里云 DashScope `text-embedding-v4`（Embedding）
-- **可观测**：OpenTelemetry + Prometheus + JSON 结构化日志
+- **Orchestration**: LangGraph + LangGraph Checkpoint (Postgres)
+- **Services**: FastAPI + Uvicorn
+- **Async tasks**: Celery (Redis broker/backend) + distributed circuit breaker + Tenacity retries
+- **Storage**: PostgreSQL (SQLAlchemy + Alembic) / Redis / Qdrant
+- **Models**: DeepSeek (LLM) + Alibaba Cloud DashScope `text-embedding-v4` (embeddings)
+- **Observability**: OpenTelemetry + Prometheus + structured JSON logging
 
 ---
 
-## 🎬 演示
+## 🎬 Demo
 
-退款审核全链路（客户提交 → 人工审核 → 状态更新）：
+Refund review end-to-end (customer submits → human review → status update):
 
-**① 演示入口（/demo）**
+**① Demo landing page (/demo)**
 
-![演示入口页](docs/demo-landing.png)
+![Demo landing page](docs/demo-landing.png)
 
-**② 客户对话与状态查询（/chat）**
+**② Customer chat & status lookup (/chat)**
 
-![客户对话界面](docs/chat-conversation.png)
+![Customer chat interface](docs/chat-conversation.png)
 
-![查询订单退款状态](docs/chat-refund-status.png)
+![Look up order refund status](docs/chat-refund-status.png)
 
-**③ 人工审核工作台（/review）**
+**③ Human review workspace (/review)**
 
-![审核工作台](docs/review-workbench.png)
+![Review workspace](docs/review-workbench.png)
 
-![批准退款](docs/review-approve.png)
+![Approve refund](docs/review-approve.png)
 
-![驳回退款](docs/review-reject.png)
+![Reject refund](docs/review-reject.png)
 
-三个页面：
+Three pages:
 
-| 路由 | 说明 |
+| Route | Description |
 |---|---|
-| `/demo` | 演示入口页 |
-| `/chat` | 客户对话：SSE 实时流式展示 Agent 的意图识别 → 知识检索 → 工具调用 → 回复 |
-| `/review` | 管理员人工审核工作台：核对订单/金额/审计，批准或驳回 |
+| `/demo` | Demo landing page |
+| `/chat` | Customer chat: SSE live streaming of the agent's intent detection → knowledge retrieval → tool calls → reply |
+| `/review` | Admin human-review workspace: verify order/amount/audit, then approve or reject |
 
-演示账号（密码在本地 `infra/eval-v3/.env`，不入库）：
+Demo accounts (passwords live in the local `infra/eval-v3/.env` and are not committed):
 
-| 角色 | 账号 |
+| Role | Account |
 |---|---|
-| 客户 | `eval_alpha_alice` |
-| 管理员 | `eval_alpha_admin` |
+| Customer | `eval_alpha_alice` |
+| Admin | `eval_alpha_admin` |
 
 ---
 
-## 📊 评估结果
+## 📊 Evaluation Results
 
-- **隔离边界回归**（`eval_v3/`）：M0 **12/12**、M1 **10/10**、M2/M3 **9/9**
-- **端到端自动评分**（`eval_agent/`）：**59/60**
-- **审核违规率**：**2/21 → 0/21**（Bad Case 分析定位"未审先判"幻觉，硬性兜底策略修复）
-- **LLM-as-a-Judge 语义复核**（`eval_agent/judge.py`）：16 条含回复案例中，规则护栏全部通过；校准后的 Judge 额外识别出 **6 条**规则漏判的语义问题（Agent 向客户泄漏"我没有 XX 工具"等内部能力）。判据经人工校准，完整判定见 `eval_agent/results/judge_*.json`
-- **检索评测基线**（`eval_agent/benchmark_retrieval.py`）：15 条合成标注查询，hybrid（BM25 + dense）基线 **hit@1 0.93 / recall@3 1.00 / MRR@3 0.97**，报告 `eval_agent/results/retrieval_*.json`
-- **RAG 质量评估**（`eval_external/ragas_eval.py`）：RAGAS 0.2.15 对 **30 条合成问答**评分，faithfulness / answer_relevancy / context_precision 均值 **0.94 / 0.75 / 0.96**（剔除判官超时后有效样本 **22 / 30 / 23**），报告 `eval_external/results/ragas_*.json`
+- **Isolation-boundary regression** (`eval_v3/`): M0 **12/12**, M1 **10/10**, M2/M3 **9/9**
+- **End-to-end auto-scoring** (`eval_agent/`): **59/60**
+- **Review violation rate**: **2/21 → 0/21** (bad-case analysis traced the "decide before review" hallucination; a hard fallback policy fixed it)
+- **LLM-as-a-Judge semantic review** (`eval_agent/judge.py`): all rule guards passed on the 16 reply-bearing cases; the calibrated judge additionally caught **6** semantic issues that the rules missed (e.g. the agent leaking internal capability like "I don't have an XX tool"). Judging criteria were manually calibrated; full verdicts are in `eval_agent/results/judge_*.json`
+- **Retrieval evaluation baseline** (`eval_agent/benchmark_retrieval.py`): 15 synthetic labeled queries; hybrid (BM25 + dense) baseline **hit@1 0.93 / recall@3 1.00 / MRR@3 0.97**; reports in `eval_agent/results/retrieval_*.json`
+- **RAG quality evaluation** (`eval_external/ragas_eval.py`): RAGAS 0.2.15 scored **30 synthetic Q&A pairs**; mean faithfulness / answer_relevancy / context_precision **0.94 / 0.75 / 0.96** (valid samples **22 / 30 / 23** after excluding judge timeouts); reports in `eval_external/results/ragas_*.json`
 
-> 所有评估用例与知识库均为**合成数据**（虚构商户 EVAL）；不同评估范围与版本的分数不直接相加。详情见 `eval_v3/`、`eval_agent/`、`eval_external/` 与 `docs/`。
+> All evaluation cases and knowledge bases are **synthetic data** (fictional merchant EVAL); scores across different scopes and versions do not simply add up. See `eval_v3/`, `eval_agent/`, `eval_external/`, and `docs/` for details.
 
 ---
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 app/
-  agent/       # LangGraph 节点（intent_guard / memory_gateway / planner / executor）+ 工具与技能
-  api/         # FastAPI 路由、鉴权、限流
-  core/        # 配置、DB、Redis、向量库、安全、可观测
-  models/      # SQLAlchemy 模型
-  workers/     # Celery 任务、熔断器、进度事件、outbox 投递
-  web/         # demo 页面（chat / review / demo）
-migrations/    # Alembic 迁移
-eval_v3/       # M0–M3 隔离边界回归
-eval_agent/    # 端到端 Agent、故障、知识库与记忆评估
-eval_external/ # RAGAS 评测脚本、问题集与结果
-infra/         # Docker Compose（PostgreSQL / Redis / Qdrant）
-docs/          # 架构、评估分析、故障排查记录
+  agent/       # LangGraph nodes (intent_guard / memory_gateway / planner / executor) + tools & skills
+  api/         # FastAPI routes, auth, rate limiting
+  core/        # config, DB, Redis, vector store, security, observability
+  models/      # SQLAlchemy models
+  workers/     # Celery tasks, circuit breaker, progress events, outbox delivery
+  web/         # demo pages (chat / review / demo)
+migrations/    # Alembic migrations
+eval_v3/       # M0–M3 isolation-boundary regression
+eval_agent/    # end-to-end agent, fault, knowledge, and memory evaluation
+eval_external/ # RAGAS evaluation scripts, question sets, and results
+infra/         # Docker Compose (PostgreSQL / Redis / Qdrant)
+docs/          # architecture, evaluation analysis, troubleshooting notes
 ```
 
 ---
 
-## 🚀 本地运行
+## 🚀 Running Locally
 
 ```bash
-# 1) 启动隔离基础设施（Postgres / Redis / Qdrant）
+# 1) Start isolated infrastructure (Postgres / Redis / Qdrant)
 docker compose --env-file infra/eval-v3/.env -f infra/eval-v3/compose.yaml -p agent_eval_v3 up -d
 
-# 2) 建集合 → 建表 → 灌演示数据
+# 2) Create collections → migrate tables → seed demo data
 ./infra/eval-v3/run.ps1 -Exe python -Arguments @('scripts/init_eval_qdrant.py')
 ./infra/eval-v3/run.ps1 -Exe python -Arguments @('-m','alembic','upgrade','head')
 ./infra/eval-v3/run.ps1 -Exe python -Arguments @('eval_v3/seed.py','--apply')
 
-# 3) 三个进程各开一个终端（都要常驻）
+# 3) Run these three long-lived processes, each in its own terminal
 ./infra/eval-v3/run.ps1 -Exe python -Arguments @('scripts/run_api.py','--host','127.0.0.1','--port','58080')
 ./infra/eval-v3/run.ps1 -Exe python -Arguments @('-m','celery','-A','app.workers.celery_app:celery_app','worker','--pool=solo','--loglevel=INFO')
 ./infra/eval-v3/run.ps1 -Exe python -Arguments @('-m','celery','-A','app.workers.celery_app:celery_app','beat','--loglevel=INFO','--schedule','infra/eval-v3/celerybeat-schedule')
 ```
 
-浏览器打开 `http://127.0.0.1:58080/demo`。详细启动/账号说明见 `docs/review-demo.md` 与 `infra/eval-v3/README.md`。
+Open `http://127.0.0.1:58080/demo` in your browser. For detailed startup/account instructions, see `docs/review-demo.md` and `infra/eval-v3/README.md`.
 
 ---
 
-## 📝 说明
+## 📝 Notes
 
-- 本系统为个人学习展示用途，**未接入真实支付网关**；`refunded` 只是原型数据库的状态。
+- This system is for personal learning and demonstration and is **not connected to a real payment gateway**; `refunded` is only a state in the prototype database.
 
 ---
 
-## 📄 许可证
+## 📄 License
 
 [MIT](LICENSE) © 2026 OliverKatKat
