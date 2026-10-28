@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     DEFAULT_TENANT_ID: Literal["merchant_default"] = "merchant_default"
     # 🆕 新增：只读数据库 URL，默认可回退到主库方便本地测试
     READONLY_DATABASE_URL: str = ""
+    # Workbench analytics never falls back to the business connection.
+    ANALYTICS_READONLY_DATABASE_URL: str = ""
+    LOGISTICS_DATABASE_URL: str = ""  # Dedicated readonly provider; never fall back.
     
     SECRET_KEY: str = Field(..., description="必须从 .env 注入，禁止硬编码默认值")
     ALGORITHM: str = "HS256"
@@ -25,6 +28,8 @@ class Settings(BaseSettings):
     MEMORY_CONTEXT_MAX_TOKENS: int = Field(default=32768, ge=512, le=131072)
     CUSTOMER_MEMORY_TTL_DAYS: int = Field(default=365, ge=1, le=3650)
     COMPANY_KNOWLEDGE_COLLECTION: str = "company_knowledge_v2"
+    KNOWLEDGE_RETRIEVAL_MODE: Literal["hybrid", "dense", "bm25"] = "hybrid"
+    DEMO_DATA_ONLY: bool = False
 
     # 🧠 大模型 (LLM) 基础配置
     DEEPSEEK_API_KEY: str

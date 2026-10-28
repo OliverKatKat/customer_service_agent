@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: wb_demo
+      POSTGRES_PASSWORD: ${DEMO_DB_PASSWORD:?Run scripts/run_workbench_demo.py}
+      POSTGRES_DB: workbench_demo
+    ports: ["127.0.0.1:55459:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wb_demo -d workbench_demo"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:56380:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports: ["127.0.0.1:56335:6333"]
+    volumes: ["qdrant_data:/qdrant/storage"]
+volumes:
+  postgres_data:
+  qdrant_data:

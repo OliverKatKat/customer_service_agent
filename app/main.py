@@ -4,12 +4,16 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Response, status
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from redis.asyncio import Redis
 from app.core.config import settings
 from app.core.logging import JSONFormatter
 from app.core.tracing import instrument_fastapi, setup_tracing
 from app.api.v1.auth import router as auth_router
 from app.api.v1.endpoints import router as api_router
+from app.api.v1.workbench import router as workbench_router
+from app.api.v1.analytics import router as analytics_router
+from app.core.analytics_db import close_analytics_engines
 from app.agent.graph import get_pool
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.core.config import settings
@@ -46,11 +50,11 @@ async def lifespan(app: FastAPI):
     # 真正开启连接池。此时 FastAPI 已经准备好了 Event Loop，所以不会报错
     pool = await get_pool()
     
-    yield # 把控制权交还给 FastAPI，服务器开始正常运行处理请求
-    
-    # 🌟 服务器关闭时执行：
-    print("🛑 正在优雅关闭记忆库连接...")
-    await pool.close() # 释放数据库连接
+    try:
+        yield
+    finally:
+        await close_analytics_engines()
+        await pool.close()
 
 # 3. 创建唯一且全局的 FastAPI 实例
 app = FastAPI(
@@ -72,6 +76,21 @@ Instrumentator(
 # 4. 挂载所有的路由 (Routers)
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["Authentication"])
 app.include_router(api_router, prefix="/api/v1", tags=["Agent"])
+app.include_router(workbench_router, prefix="/api/v1", tags=["Workbench"])
+app.include_router(analytics_router, prefix="/api/v1", tags=["Analytics"])
+
+
+app.mount("/assets", StaticFiles(directory=Path(__file__).resolve().parent / "web" / "assets"), name="web-assets")
+
+
+@app.get("/login", include_in_schema=False)
+def unified_login():
+    return FileResponse(Path(__file__).resolve().parent / "web" / "login.html", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/workbench", include_in_schema=False)
+def operations_workspace():
+    return FileResponse(Path(__file__).resolve().parent / "web" / "workbench.html")
 
 @app.get("/review", include_in_schema=False)
 def review_workspace():

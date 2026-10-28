@@ -1,0 +1,514 @@
+{
+  "version": "earphones-demo-v1",
+  "synthetic": true,
+  "anchor_utc": "2026-10-28T08:00:00+00:00",
+  "tenants": [
+    {
+      "id": "demo_echo",
+      "name": "回声耳机店（虚构演示）"
+    },
+    {
+      "id": "demo_nova",
+      "name": "Nova 音箱店（虚构隔离样本）"
+    }
+  ],
+  "users": [
+    {
+      "tenant_id": "demo_echo",
+      "username": "demo_echo_alice",
+      "role": "user"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "username": "demo_echo_bob",
+      "role": "user"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "username": "demo_echo_carol",
+      "role": "user"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "username": "demo_echo_staff",
+      "role": "staff"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "username": "demo_echo_analyst",
+      "role": "analyst"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "username": "demo_echo_admin",
+      "role": "admin"
+    },
+    {
+      "tenant_id": "demo_nova",
+      "username": "demo_nova_alice",
+      "role": "user"
+    },
+    {
+      "tenant_id": "demo_nova",
+      "username": "demo_nova_admin",
+      "role": "admin"
+    }
+  ],
+  "orders": [
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-001",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-002",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "shipped"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-003",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-004",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-005",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "refunded"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-006",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "shipped"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-007",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "out_of_stock"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-008",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "refunded"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-009",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-010",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-011",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-012",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "pending"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-013",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-014",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "shipped"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-015",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-016",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "pending"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-017",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-018",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "shipped"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-019",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-020",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "pending"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-021",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-022",
+      "customer_id": "demo_echo_alice",
+      "product": "Echo Lite 无线耳机",
+      "amount": "199.00",
+      "status": "shipped"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-023",
+      "customer_id": "demo_echo_bob",
+      "product": "Echo Pro 降噪耳机",
+      "amount": "399.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-024",
+      "customer_id": "demo_echo_carol",
+      "product": "Echo Air 运动耳机",
+      "amount": "299.00",
+      "status": "pending"
+    },
+    {
+      "tenant_id": "demo_nova",
+      "order_id": "DEMO-NOVA-001",
+      "customer_id": "demo_nova_alice",
+      "product": "Nova 桌面音箱",
+      "amount": "599.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_nova",
+      "order_id": "DEMO-NOVA-002",
+      "customer_id": "demo_nova_alice",
+      "product": "Nova 桌面音箱",
+      "amount": "599.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_nova",
+      "order_id": "DEMO-NOVA-003",
+      "customer_id": "demo_nova_alice",
+      "product": "Nova 桌面音箱",
+      "amount": "599.00",
+      "status": "paid"
+    },
+    {
+      "tenant_id": "demo_nova",
+      "order_id": "DEMO-NOVA-004",
+      "customer_id": "demo_nova_alice",
+      "product": "Nova 桌面音箱",
+      "amount": "599.00",
+      "status": "paid"
+    }
+  ],
+  "cases": [
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-REFUND",
+      "order_id": "DEMO-ECHO-001",
+      "case_type": "refund",
+      "reason_code": "changed_mind",
+      "status": "open",
+      "contacts": [
+        {
+          "title": "未发货想取消订单",
+          "description": "商品：Echo Lite 无线耳机。客户描述：我买错了耳机型号，订单尚未发货，希望退款。",
+          "status": "escalated"
+        }
+      ],
+      "review_status": "pending"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-SHIPPED",
+      "order_id": "DEMO-ECHO-002",
+      "case_type": "complaint",
+      "reason_code": "other",
+      "status": "in_progress",
+      "contacts": [
+        {
+          "title": "已发货仍想直接退款",
+          "description": "商品：Echo Pro 降噪耳机。客户描述：订单已经发货，请客服先核实物流处理方式。",
+          "status": "processing"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-REPEAT",
+      "order_id": "DEMO-ECHO-003",
+      "case_type": "refund",
+      "reason_code": null,
+      "status": "open",
+      "contacts": [
+        {
+          "title": "继续咨询同一售后申请",
+          "description": "商品：Echo Air 运动耳机。客户描述：上次联系后还没有结果，想补充说明。",
+          "status": "pending"
+        },
+        {
+          "title": "补充同一申请的信息",
+          "description": "商品：Echo Air 运动耳机。补充说明：希望工作日通过站内信沟通。",
+          "status": "pending"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-CONSULT",
+      "order_id": "DEMO-ECHO-004",
+      "case_type": "consultation",
+      "reason_code": null,
+      "status": "resolved",
+      "contacts": [
+        {
+          "title": "咨询耳机配对方式",
+          "description": "商品：Echo Lite 无线耳机。客户描述：已按演示说明完成设备配对。",
+          "status": "resolved"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-COMPLETE",
+      "order_id": "DEMO-ECHO-005",
+      "case_type": "refund",
+      "reason_code": "changed_mind",
+      "status": "resolved",
+      "contacts": [
+        {
+          "title": "已完成的模拟退款",
+          "description": "商品：Echo Pro 降噪耳机。客户描述：管理员批准后，原型订单已更新为 refunded。",
+          "status": "resolved"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-RETURN",
+      "order_id": "DEMO-ECHO-006",
+      "case_type": "return",
+      "reason_code": "product_fault",
+      "status": "in_progress",
+      "contacts": [
+        {
+          "title": "收货后单侧无声",
+          "description": "商品：Echo Air 运动耳机。客户描述：需要人工核实故障现象和退货安排。",
+          "status": "processing"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-STOCK",
+      "order_id": "DEMO-ECHO-007",
+      "case_type": "refund",
+      "reason_code": "delivery_delay",
+      "status": "open",
+      "contacts": [
+        {
+          "title": "缺货订单申请退款",
+          "description": "商品：Echo Lite 无线耳机。客户描述：商品缺货，客户不愿继续等待。",
+          "status": "escalated"
+        }
+      ],
+      "review_status": "pending"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-HISTORY",
+      "order_id": "DEMO-ECHO-008",
+      "case_type": "refund",
+      "reason_code": "other",
+      "status": "resolved",
+      "contacts": [
+        {
+          "title": "历史模拟退款记录",
+          "description": "商品：Echo Pro 降噪耳机。客户描述：保留一条已完成记录用于展示状态区别。",
+          "status": "resolved"
+        }
+      ],
+      "review_status": "approved"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-MISSING",
+      "order_id": "DEMO-ECHO-009",
+      "case_type": "complaint",
+      "reason_code": null,
+      "status": "open",
+      "contacts": [
+        {
+          "title": "耳机使用异常但信息不足",
+          "description": "商品：Echo Air 运动耳机。客户描述：暂未提供具体故障现象，待补充。",
+          "status": "pending"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-CLOSED",
+      "order_id": "DEMO-ECHO-010",
+      "case_type": "consultation",
+      "reason_code": null,
+      "status": "closed",
+      "contacts": [
+        {
+          "title": "咨询充电指示灯",
+          "description": "商品：Echo Lite 无线耳机。客户描述：咨询已结束，未涉及退款。",
+          "status": "closed"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-REJECTED",
+      "order_id": "DEMO-ECHO-011",
+      "case_type": "refund",
+      "reason_code": "other",
+      "status": "in_progress",
+      "contacts": [
+        {
+          "title": "人工审核驳回后待沟通",
+          "description": "商品：Echo Pro 降噪耳机。客户描述：演示驳回原因与后续沟通记录。",
+          "status": "rejected"
+        }
+      ],
+      "review_status": "rejected"
+    },
+    {
+      "tenant_id": "demo_echo",
+      "case_id": "CASE-DEMO-PAYMENT",
+      "order_id": "DEMO-ECHO-012",
+      "case_type": "complaint",
+      "reason_code": null,
+      "status": "open",
+      "contacts": [
+        {
+          "title": "待付款订单声称已扣款",
+          "description": "商品：Echo Air 运动耳机。客户描述：订单记录仍为待付款，需要人工核实支付记录。",
+          "status": "pending"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_nova",
+      "case_id": "CASE-NOVA-001",
+      "order_id": "DEMO-NOVA-001",
+      "case_type": "complaint",
+      "reason_code": null,
+      "status": "open",
+      "contacts": [
+        {
+          "title": "另一商家隔离样本",
+          "description": "这是 Nova 商家的合成售后，不应出现在 Echo 工作台。",
+          "status": "pending"
+        }
+      ],
+      "review_status": null
+    },
+    {
+      "tenant_id": "demo_nova",
+      "case_id": "CASE-NOVA-002",
+      "order_id": "DEMO-NOVA-002",
+      "case_type": "complaint",
+      "reason_code": null,
+      "status": "open",
+      "contacts": [
+        {
+          "title": "另一商家隔离样本",
+          "description": "这是 Nova 商家的合成售后，不应出现在 Echo 工作台。",
+          "status": "pending"
+        }
+      ],
+      "review_status": null
+    }
+  ]
+}

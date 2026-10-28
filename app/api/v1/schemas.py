@@ -5,6 +5,7 @@ class TicketCreate(BaseModel):
     topic: str = Field(..., min_length=1, max_length=100, description="工单的主题或用户的初次提问")
     # 客户身份只从服务端验证过的登录信息取得。
     order_id: str = Field(default="", description="相关的订单号（可选）")
+    case_id: str | None = Field(default=None, min_length=1, max_length=64, description="重复联系时显式关联本人未结束的售后申请")
 
     @validator('topic')
     def topic_must_not_be_sensitive(cls, v):

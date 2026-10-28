@@ -12,6 +12,7 @@ from app.agent.state import AgentState
 
 REFUND_TOOL_NAMES = (
     "inspect_refund_request",
+    "get_logistics_status",
     "consult_company_knowledge",
     "process_large_refund",
 )

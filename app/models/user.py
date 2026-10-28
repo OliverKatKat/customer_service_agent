@@ -16,7 +16,7 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(50), unique=True, index=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False) # 存 bcrypt 哈希值
     
-    # 角色字段：'admin' (管理员/高级客服), 'user' (普通客户)
+    # Existing admin/user; workbench additionally recognizes staff and analyst.
     role: Mapped[str] = mapped_column(String(20), default="user", index=True) 
     
     # 账号状态：方便未来做“一键封禁”恶意用户的功能

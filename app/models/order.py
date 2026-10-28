@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Float, DateTime, ForeignKey, Index
+from sqlalchemy import String, Float, DateTime, ForeignKey, Index, UniqueConstraint
 from datetime import datetime
 from app.core.db import Base
 
 class Order(Base):
     __tablename__ = "orders"
     __table_args__ = (
+        UniqueConstraint("tenant_id", "order_id", name="uq_orders_tenant_order_workbench"),
         Index("ix_orders_tenant_order_id", "tenant_id", "order_id"),
         Index("ix_orders_tenant_customer_id", "tenant_id", "customer_id"),
     )

@@ -4,6 +4,31 @@ An LLM agent for **after-sales refunds and knowledge-based support**, with first
 
 > ⚠️ Learning/demo use only: it updates a prototype database and is **not connected to a real payment gateway**.
 
+## Workbench and logistics MCP demo
+
+The demo now includes **28 synthetic orders, 14 cases, and 15 initial contacts**, with separate customer, support, reviewer, and analyst views behind a unified JWT login. Cases support explicit follow-up association, notes, work items, and optimistic version checks. Review materials combine database facts, merchant policies, and optional model-assisted drafts with explicit fallback behavior.
+
+With Docker Desktop running and project dependencies installed in `.venv`, start the isolated demo:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_workbench_demo.py
+```
+
+Open `http://127.0.0.1:8001/demo` or `/login`. The launcher preserves existing demo edits and keeps its PostgreSQL, Redis, and Qdrant services separate from the original environment. Demo account credentials are printed locally by the launcher; existing model keys are neither copied nor printed.
+
+| Role | Demo account | Default view |
+| --- | --- | --- |
+| Customer | `demo_echo_alice` | Customer chat |
+| Support | `demo_echo_staff` | Case workspace |
+| Reviewer | `demo_echo_admin` | Refund review |
+| Analyst | `demo_echo_analyst` | Readonly operational statistics |
+
+The private **stdio logistics MCP provider** queries `logistics.shipments` and `logistics.shipment_events` using parameterized SQL. A dedicated PostgreSQL role has SELECT access to logistics tables in the same database; this is **not a separate read replica**. The Agent gateway verifies merchant, customer, ticket, and order ownership before each call. Provider processes receive only the readonly connection and bound query scope, with no fallback to the business connection. Four synthetic packages and eight tracking events demonstrate split shipments; no live carrier API or payment gateway is connected.
+
+**Validation:** 40 isolated PostgreSQL and integration checks passed, including real MCP discovery/calls, authorization, readonly privileges, migrations, and failure handling. A separate live browser conversation exercised the model-to-MCP path for two packages while retaining the shipped-order refund restriction. This is one observed run, not a model-quality benchmark; the evaluation results below cover their original scopes.
+
+Implementation and demo guides (Chinese): [demo guide](docs/workbench-demo.md), [logistics MCP](docs/logistics-mcp.md), [workbench APIs](docs/workbench-phase1.md).
+
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](#)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](#)
 [![LangGraph](https://img.shields.io/badge/LangGraph-1.2-2563EB)](#)

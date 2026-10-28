@@ -4,6 +4,24 @@
 
 > ⚠️ 学习/演示用途：只更新原型数据库，未接入真实支付网关。
 
+## 协同工作台与物流 MCP 演示
+
+新增28笔虚构订单、14个案件、15次初始联系，以及统一 JWT 登录后的客户、专员、主管和分析员视图。案件支持显式续办、备注、待办及版本冲突检查；审核材料区分数据库事实、商家政策与模型草稿，失败时明确降级。
+
+Docker Desktop 启动且项目依赖已安装后执行：
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_workbench_demo.py
+```
+
+打开 `http://127.0.0.1:8001/demo` 或 `/login`。启动器使用独立的演示 PostgreSQL、Redis、Qdrant 服务，不重置已有演示修改。账号为 `demo_echo_alice`（客户）、`demo_echo_staff`（专员）、`demo_echo_admin`（主管）和 `demo_echo_analyst`（分析员），演示凭据显示在本地启动终端。
+
+物流工具通过私有 stdio MCP 访问 PostgreSQL 的包裹、轨迹表，使用参数化 SQL、独立只读账号和只读事务。这是**同一数据库中的只读连接，不是独立只读副本**。工具层核对商家、客户、工单与订单归属；子进程只取得已限定的查询范围，不回退主库写连接。4个合成包裹、8条轨迹用于展示拆包情况，未接真实快递 API 或支付网关。
+
+40项隔离数据库与集成检查通过，包括真实 MCP 调用、权限、迁移及失败回退；另有一次前端到模型、MCP 的实际演示，查出两个包裹不同状态并保留已发货禁止直接退款的限制。该次演示不代表模型质量基准，原有评测结果仍以各自范围为准。
+
+操作和实现说明：[演示指南](docs/workbench-demo.md)、[物流 MCP](docs/logistics-mcp.md)、[工作台接口](docs/workbench-phase1.md)。
+
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](#)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](#)
 [![LangGraph](https://img.shields.io/badge/LangGraph-1.2-2563EB)](#)

@@ -33,7 +33,10 @@ class AgentProgressCallback(AsyncCallbackHandler):
             await self._publish(*progress)
 
     async def on_tool_start(self, serialized, input_str, **kwargs):
-        await self._publish("tool_running", "正在执行查询或处理步骤")
+        if (serialized or {}).get("name") == "get_logistics_status":
+            await self._publish("logistics_query", "正在核对订单并查询物流轨迹")
+        else:
+            await self._publish("tool_running", "正在执行查询或处理步骤")
 
     async def on_tool_end(self, output, **kwargs):
         await self._publish("tool_step_completed", "查询步骤已返回，正在整理结果")

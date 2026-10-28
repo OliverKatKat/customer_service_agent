@@ -8,6 +8,7 @@ from math import isfinite
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_db
 from app.models.ticket import Ticket
+from app.models.workbench import CaseTicketBinding
 from app.models.order import Order
 from app.models.user import User
 from app.models.tenant import Tenant
@@ -18,7 +19,8 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, OAuth2Pas
 from redis.asyncio import Redis # 👈 引入异步 Redis
 
 from app.api.v1.schemas import TicketCreate, TicketApprove, ReviewApprove, ReviewReject
-from app.core.security import verify_token
+from app.api.dependencies import get_current_user, verify_admin_role
+from app.services.cases import register_ticket
 from app.agent.customer_memory import extract_local_preferences
 from app.workers.tasks import (
     process_agent_task, dispatch_review_outbox, RECOVERY_MAX_ATTEMPTS,
@@ -61,43 +63,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 # ==========================================
 # 🚨 2. 保安逻辑定义：鉴权
 # ==========================================
-async def get_current_user(
-    token: str = Depends(oauth2_scheme),
-    db: AsyncSession = Depends(get_db),
-):
-    """
-    依赖注入：Swagger UI 会自动从请求头 Authorization: Bearer <Token> 中提取 Token 并传入
-    """
-    payload = verify_token(token)
-    if not payload:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="门票无效或已过期",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    tenant_id = payload.get("tenant_id")
-    user_id = payload.get("sub")
-    if not isinstance(tenant_id, str) or not tenant_id.strip() or not isinstance(user_id, str) or not user_id.strip():
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="身份信息不完整，请重新登录")
-
-    user = (await db.execute(
-        select(User).where(User.tenant_id == tenant_id, User.username == user_id)
-    )).scalars().first()
-    if user is None or not user.is_active:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="账号不可用，请重新登录")
-    tenant = await db.get(Tenant, tenant_id)
-    if tenant is None or not tenant.is_active:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="商家账号不可用")
-    # Release the read transaction now so long-lived streaming responses (SSE)
-    # don't keep an open transaction that blocks CREATE INDEX CONCURRENTLY
-    # in the LangGraph checkpointer.
-    await db.commit()
-    return {"sub": user.username, "role": user.role, "tenant_id": user.tenant_id}
-
-
-# ==========================================
-# 🚨 3. 新增保安逻辑：滑动窗口限流
-# ==========================================
 async def verify_rate_limit(user_info: dict = Depends(get_current_user)):
     """
     依赖于鉴权：先拿到 user_id，再对该 user_id 进行精准限流
@@ -128,31 +93,14 @@ async def verify_rate_limit(user_info: dict = Depends(get_current_user)):
 # ==========================================
 # 🚨 新增保安逻辑：高级权限查验 (RBAC)
 # ==========================================
-async def verify_admin_role(current_user: dict = Depends(get_current_user)):
-    """
-    依赖于鉴权：先拿到当前用户的 Token payload，然后检查 role 字段
-    """
-    role = current_user.get("role")
-    
-    if role != "admin":
-        logger.warning("Admin role denied for customer_ref=%s", customer_ref(current_user["tenant_id"], current_user["sub"]))
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, # 403 代表身份合法，但权限不够
-            detail="权限不足：只有高级客服/管理员才能执行此高危操作！"
-        )
-    
-    # 查验通过，将 admin 的信息传递给下游
-    return current_user
-
-# ==========================================
-# 🚨 4. 纯异步派发接口 (挂载双重保安)
-# ==========================================
 @router.post("/submit", status_code=status.HTTP_202_ACCEPTED)
 async def submit_ticket(
     payload: TicketCreate,
     user_info: dict = Depends(verify_rate_limit),
     db: AsyncSession = Depends(get_db)  # 👈 注入 HTTP 生命周期的数据库 Session
 ):
+    if settings.DEMO_DATA_ONLY:
+        raise HTTPException(status_code=503, detail="当前是演示数据浏览模式。配置模型并重启演示后可发送对话；现有样本和审核材料仍可查看。")
     # 用户与租户来自已重新核验的登录身份，不接受请求体指定。
     user_id = user_info["sub"]
     tenant_id = user_info["tenant_id"]
@@ -179,6 +127,8 @@ async def submit_ticket(
         status="pending"           # 默认初始状态
     )
     db.add(new_ticket)
+    await db.flush()
+    service_case = await register_ticket(db, new_ticket, user_id, payload.case_id)
     await db.commit()
     await db.refresh(new_ticket)   # 刷新对象，拿到数据库生成的真实 ID
     
@@ -234,6 +184,7 @@ async def submit_ticket(
         "status": "pending",
         "trace_id": db_id_str,  # 兼容旧客户端；此字段实际是工单 ID。
         "ticket_id": db_id_str,
+        "case_id": service_case.case_id,
         "otel_trace_id": otel_trace_id,
         "request_id": request_id,
         "task_id": task.id,
@@ -480,7 +431,12 @@ async def review_detail(
         else "processing" if review.status == "approved"
         else review.status
     )
+    case_id = await db.scalar(select(CaseTicketBinding.case_id).where(
+        CaseTicketBinding.tenant_id == admin_info["tenant_id"],
+        CaseTicketBinding.ticket_id == review.ticket_id,
+    ))
     return {
+        "case_id": case_id,
         "review": _review_payload(review),
         "processing_state": processing_state,
         "recovery_attempts": recovery_attempts,
@@ -569,6 +525,8 @@ async def _decide_review(
     db: AsyncSession,
     expected_version: int | None = None,
 ) -> dict:
+    if settings.DEMO_DATA_ONLY:
+        raise HTTPException(status_code=503, detail="数据浏览模式不执行审批。配置模型并重启演示后可演示审批与模拟执行。")
     _check_review_code(approval_code)
     tenant_id = admin_info["tenant_id"]
     actor_id = admin_info["sub"]

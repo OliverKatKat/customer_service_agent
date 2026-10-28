@@ -7,3 +7,4 @@ from app.models.order import Order  # 👈 新增这一行，让元数据收集�
 from app.models.user import User
 
 from app.models.review import ReviewRequest, ReviewAuditEvent, NotificationOutbox
+from app.models.workbench import ServiceCase, CaseTicketBinding, CaseNote, CaseWorkItem, CaseEvent

@@ -4,6 +4,7 @@ from app.agent.tools import (
     process_large_refund,
 )
 from app.agent.refund_tools import inspect_refund_request
+from app.agent.logistics_tools import get_logistics_status
 from app.agent.knowledge_agent import consult_company_knowledge
 from langchain_openai import ChatOpenAI
 from app.core.config import settings
@@ -23,6 +24,7 @@ llm_with_tools = llm.bind_tools([
     search_user_memory,
     process_large_refund,
     inspect_refund_request,
+    get_logistics_status,
 ])
 
 AVAILABLE_TOOLS = {
@@ -30,6 +32,7 @@ AVAILABLE_TOOLS = {
     "search_user_memory": search_user_memory,
     "process_large_refund": process_large_refund,
     "inspect_refund_request": inspect_refund_request,
+    "get_logistics_status": get_logistics_status,
 }
 
 refund_llm_with_tools = llm.bind_tools(

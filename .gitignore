@@ -41,3 +41,6 @@ logs/
 # 操作系统文件
 .DS_Store
 Thumbs.db
+
+# Workbench integration reports contain only disposable synthetic test results.
+eval_workbench/results/

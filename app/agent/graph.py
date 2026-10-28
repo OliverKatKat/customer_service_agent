@@ -1,5 +1,6 @@
 # app/agent/graph.py
 import os
+import asyncio
 from dotenv import load_dotenv
 from psycopg_pool import AsyncConnectionPool
 from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver
@@ -78,6 +79,8 @@ workflow.add_edge("tools", "planner")
 
 # 🚨 3. 修改获取 app 的工厂函数
 async def get_agent_app():
+    from app.core.vector_db import initialize_memory_collection
+    await asyncio.to_thread(initialize_memory_collection)
     # 在这里动态获取连接池
     pool = await get_pool()
     memory = AsyncPostgresSaver(pool)

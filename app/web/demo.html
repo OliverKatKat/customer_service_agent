@@ -1,57 +1,12 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>售后客服 Agent · Demo</title>
-  <style>
-    :root { font-family: system-ui,"Microsoft YaHei",sans-serif; color:#16243a; background:#f3f6fb; }
-    * { box-sizing:border-box; }
-    body { margin:0; }
-    header { background:#102543; color:white; padding:26px clamp(18px,5vw,70px); }
-    h1 { margin:0; font-size:24px; } header p { margin:8px 0 0; color:#bbd0eb; max-width:760px; line-height:1.6; }
-    main { max-width:1000px; margin:28px auto; padding:0 18px 60px; }
-    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin:20px 0; }
-    a.card { display:block; background:#fff; border:1px solid #d9e3f0; border-radius:14px; padding:22px; text-decoration:none; color:inherit; box-shadow:0 6px 24px #18395b0b; }
-    a.card:hover { border-color:#175fc6; }
-    a.card h2 { margin:0 0 8px; font-size:18px; }
-    a.card p { margin:0; color:#607089; line-height:1.55; }
-    a.card .go { display:inline-block; margin-top:12px; color:#175fc6; font-weight:600; }
-    .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:24px; }
-    .feature { background:#eef3fb; border:1px solid #dbe6f3; border-radius:12px; padding:14px 16px; }
-    .feature b { display:block; margin-bottom:4px; }
-    .feature span { color:#607089; font-size:14px; line-height:1.5; }
-    .notice { padding:12px 14px; border-radius:9px; background:#fff6df; color:#654300; line-height:1.55; font-size:14px; }
-  </style>
-</head>
-<body>
-<header>
-  <h1>售后客服 Agent</h1>
-  <p>面向售后退款与知识咨询的智能客服，具备身份隔离、人工审核、状态恢复与安全边界。使用 LangGraph 编排、Celery 异步、PostgreSQL/Qdrant 记忆与检索。</p>
-</header>
-<main>
-  <div class="notice">本演示只更新原型数据库中的订单状态，<b>未接入实际支付退款</b>。退款类请求会进入人工审核链路。</div>
-
-  <div class="cards">
-    <a class="card" href="/chat">
-      <h2>💬 客户对话</h2>
-      <p>以客户身份提问，实时查看 Agent 的意图识别、知识检索、工具调用与最终答复。退款请求会进入人工审核。</p>
-      <span class="go">进入对话 →</span>
-    </a>
-    <a class="card" href="/review">
-      <h2>🛡️ 人工审核工作台</h2>
-      <p>以管理员身份查看待审核的退款请求，核对订单/金额/审计记录，执行批准或驳回（含二次审批凭据）。</p>
-      <span class="go">进入工作台 →</span>
-    </a>
-  </div>
-
-  <h2 style="font-size:17px;margin:8px 0 0">核心能力</h2>
-  <div class="features">
-    <div class="feature"><b>Agent 编排与状态管理</b><span>LangGraph 意图网关 + 记忆网关 + Planner/Executor，工单级 Checkpoint 持久化，支持中断恢复。</span></div>
-    <div class="feature"><b>人工审核与安全边界</b><span>退款工具复核租户/客户/工单/订单/金额归属，批准前拦截缺少持久记录的承诺。</span></div>
-    <div class="feature"><b>知识与客户记忆</b><span>租户专属手册 + Qdrant 向量库，BM25 与向量混合检索并校验证据编号。</span></div>
-    <div class="feature"><b>测评与闭环</b><span>LLM-as-a-Judge + Bad Case 分析，隔离环境回归 59/60、违规率 2/21 → 0/21。</span></div>
-  </div>
-</main>
-</body>
-</html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>演示场景 · Echo 售后服务</title>
+<link rel="stylesheet" href="/assets/app.css"><script src="/assets/session.js" defer></script><script src="/assets/ui.js" defer></script><script src="/assets/home.js" defer></script></head>
+<body><header class="public-header"><a class="brand" href="/demo"><span class="brand-mark">e</span>echo<small>回声售后</small></a><nav><a href="/demo#scenarios">演示场景</a><span id="publicIdentity" class="muted"></span><a id="enterWorkspace" class="button primary" href="/login">登录工作区 ↗</a></nav></header><main class="public-main">
+ <section class="hero"><div><span class="eyebrow">A LITTLE HELP. A CLEARER HANDOFF.</span><h1>让每一次售后，<br>都有<em>清楚的交接。</em></h1><p>客户说清问题，AI 整理材料，工作人员接手处理。把分散的订单、联系记录和审核依据，放回同一条售后流程。</p><div class="row"><a class="button primary" href="/login">进入演示工作区 ↗</a><a class="button" href="#scenarios">先看看三个场景 ↓</a></div><div class="hero-note"><span class="dot"></span>虚构耳机店 · 真实接口交互 · 退款为模拟执行</div></div>
+ <div class="preview-board" aria-label="售后处理流程示意"><div class="board-top"><b>一条申请，连续跟进</b><span class="board-caption">流程示意</span></div><div class="flow"><div class="flow-step"><b>01　客户提出问题</b><span>关联订单，保留每一次补充联系</span></div><div class="flow-step"><b>02　AI 协助整理</b><span>归纳诉求，找到适用的商家政策</span></div><div class="flow-step"><b>03　人工核对与决定</b><span>核对事实和依据，记录审核理由</span></div><div class="flow-step"><b>04　跟进处理结果</b><span>分别查看批准状态与模拟执行结果</span></div></div><div class="board-bottom">把时间留给判断，把整理交给工具。</div></div>
+ </section>
+ <section id="scenarios"><div class="section-title"><h2>从一个真实的问题开始</h2><span class="muted">三个合成场景，体验完整的处理过程</span></div><div class="scenario-grid">
+ <a class="scenario-card" href="/login?account=demo_echo_staff&amp;next=%2Fworkbench%3Fcase_id%3DCASE-DEMO-REFUND"><span class="scenario-number">SCENARIO 01</span><h3>未发货，想取消订单</h3><p>客户买错了型号。专员核对订单与政策，整理审核材料，再由主管决定是否批准。</p><footer><span>专员 → 主管</span><span>查看场景 ↗</span></footer></a>
+ <a class="scenario-card" href="/login?account=demo_echo_alice&amp;next=%2Fchat%3Fscene%3Dshipped%26order_id%3DDEMO-ECHO-002"><span class="scenario-number">SCENARIO 02</span><h3>已经发货，怎么办？</h3><p>退款需要先核实物流。看看 Agent 如何引用政策、说明处理边界，交由人工继续跟进。</p><footer><span>客户 → 售后跟进</span><span>体验对话 ↗</span></footer></a>
+ <a class="scenario-card" href="/login?account=demo_echo_alice&amp;next=%2Fchat%3Fscene%3Drepeat%26order_id%3DDEMO-ECHO-003%26case_id%3DCASE-DEMO-REPEAT"><span class="scenario-number">SCENARIO 03</span><h3>关于上次那条申请…</h3><p>客户再次补充信息。同一条申请关联前后联系，工作人员能接着上次的记录处理。</p><footer><span>客户补充 → 专员接续</span><span>继续申请 ↗</span></footer></a>
+ </div></section><footer class="public-foot"><span>一个轻量的售后协同 Agent 项目</span><span>样本及商家政策均为虚构 · 预置历史不代表实时模型结果</span></footer></main></body></html>

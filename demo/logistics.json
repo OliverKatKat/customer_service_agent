@@ -1,0 +1,97 @@
+{
+  "synthetic": true,
+  "shipments": [
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-002",
+      "customer_id": "demo_echo_alice",
+      "shipment_id": "ECHO-PACK-002-A",
+      "carrier": "虚构演示快递",
+      "tracking_number": "SYNTHETIC-ECHO-PACK-002-A",
+      "source": "synthetic",
+      "events": [
+        {
+          "event_id": "001",
+          "status": "picked_up",
+          "description": "合成轨迹：快递已揽收",
+          "occurred_at": "2026-10-28T03:00:00+00:00"
+        },
+        {
+          "event_id": "002",
+          "status": "in_transit",
+          "description": "合成轨迹：到达转运中心",
+          "occurred_at": "2026-10-28T09:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-002",
+      "customer_id": "demo_echo_alice",
+      "shipment_id": "ECHO-PACK-002-B",
+      "carrier": "虚构演示快递",
+      "tracking_number": "SYNTHETIC-ECHO-PACK-002-B",
+      "source": "synthetic",
+      "events": [
+        {
+          "event_id": "001",
+          "status": "picked_up",
+          "description": "合成轨迹：快递已揽收",
+          "occurred_at": "2026-10-28T03:00:00+00:00"
+        },
+        {
+          "event_id": "002",
+          "status": "delivered",
+          "description": "合成轨迹：包裹已签收",
+          "occurred_at": "2026-10-28T09:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "tenant_id": "demo_echo",
+      "order_id": "DEMO-ECHO-006",
+      "customer_id": "demo_echo_carol",
+      "shipment_id": "ECHO-PACK-006",
+      "carrier": "虚构演示快递",
+      "tracking_number": "SYNTHETIC-ECHO-PACK-006",
+      "source": "synthetic",
+      "events": [
+        {
+          "event_id": "001",
+          "status": "picked_up",
+          "description": "合成轨迹：快递已揽收",
+          "occurred_at": "2026-10-28T03:00:00+00:00"
+        },
+        {
+          "event_id": "002",
+          "status": "exception",
+          "description": "合成轨迹：派送异常，需人工核实",
+          "occurred_at": "2026-10-28T09:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "tenant_id": "demo_nova",
+      "order_id": "DEMO-NOVA-001",
+      "customer_id": "demo_nova_alice",
+      "shipment_id": "NOVA-PACK-001",
+      "carrier": "虚构演示快递",
+      "tracking_number": "SYNTHETIC-NOVA-PACK-001",
+      "source": "synthetic",
+      "events": [
+        {
+          "event_id": "001",
+          "status": "picked_up",
+          "description": "合成轨迹：快递已揽收",
+          "occurred_at": "2026-10-28T03:00:00+00:00"
+        },
+        {
+          "event_id": "002",
+          "status": "picked_up",
+          "description": "合成轨迹：已揽收待转运",
+          "occurred_at": "2026-10-28T09:00:00+00:00"
+        }
+      ]
+    }
+  ]
+}

@@ -54,7 +54,7 @@ _knowledge_llm = ChatOpenAI(
 
 async def _retrieve_node(state: KnowledgeAgentState) -> dict:
     try:
-        documents = await retrieve_company_knowledge(state["query"], state["tenant_id"])
+        documents = await retrieve_company_knowledge(state["query"], state["tenant_id"], mode=settings.KNOWLEDGE_RETRIEVAL_MODE)
     except Exception:
         logger.exception("Company knowledge retrieval failed")
         return {
@@ -182,9 +182,9 @@ async def consult_company_knowledge(query: str, config: RunnableConfig) -> str:
             else:
                 tenant_id = trusted[0]
                 scope = resolve_knowledge_scope(tenant_id)
-                if scope is None or not await asyncio.to_thread(
+                if scope is None or (settings.KNOWLEDGE_RETRIEVAL_MODE != "bm25" and not await asyncio.to_thread(
                     qdrant_client.collection_exists, scope.collection
-                ):
+                )):
                     status = "tenant_knowledge_unavailable"
                 else:
                     result = await knowledge_agent_graph.ainvoke({
